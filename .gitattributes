@@ -1,0 +1,10 @@
+# Definições globais para o projeto
+
+# Gradle Wrapper
+/back-end/gradlew text eol=lf
+
+# Scripts em lote (Windows)
+*.bat text eol=crlf
+
+# Arquivos binários
+*.jar binary

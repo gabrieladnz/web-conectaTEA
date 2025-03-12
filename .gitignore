@@ -1,0 +1,86 @@
+# Veja mais em https://docs.github.com/get-started/getting-started-with-git/ignoring-files
+.idea/
+
+## FRONTEND ##
+
+# Compiled output
+/frontend/conectaTEA/dist
+/frontend/conectaTEA/tmp
+/frontend/conectaTEA/out-tsc
+/frontend/conectaTEA/bazel-out
+
+# Node
+/frontend/conectaTEA/node_modules
+/frontend/conectaTEA/npm-debug.log
+/frontend/conectaTEA/yarn-error.log
+
+# IDEs e editores
+/frontend/conectaTEA/.idea/
+/frontend/conectaTEA/.project
+/frontend/conectaTEA/.classpath
+/frontend/conectaTEA/.c9/
+/frontend/conectaTEA/*.launch
+/frontend/conectaTEA/.settings/
+/frontend/conectaTEA/*.sublime-workspace
+
+# Visual Studio Code
+/frontend/conectaTEA/.vscode/*
+!/frontend/conectaTEA/.vscode/settings.json
+!/frontend/conectaTEA/.vscode/tasks.json
+!/frontend/conectaTEA/.vscode/launch.json
+!/frontend/conectaTEA/.vscode/extensions.json
+/frontend/conectaTEA/.history/*
+
+# Miscellaneous
+/frontend/conectaTEA/.angular/cache
+/frontend/conectaTEA/.sass-cache/
+/frontend/conectaTEA/connect.lock
+/frontend/conectaTEA/coverage
+/frontend/conectaTEA/libpeerconnection.log
+/frontend/conectaTEA/testem.log
+/frontend/conectaTEA/typings
+
+# Arquivos do sistema
+/frontend/conectaTEA/.DS_Store
+/frontend/conectaTEA/Thumbs.db
+
+## BACK-END ##
+
+# Arquivos relacionados ao Gradle
+/backend/conectaTEA/.gradle
+/backend/conectaTEA/build/
+/backend/conectaTEA/gradle/wrapper/gradle-wrapper.jar
+!backend/conectaTEA/src/main/**/build/
+/backend/conectaTEA/src/test/**/build/
+
+### Spring Tool Suite (STS) ###
+/backend/conectaTEA/.apt_generated
+/backend/conectaTEA/.classpath
+/backend/conectaTEA/.factorypath
+/backend/conectaTEA/.project
+/backend/conectaTEA/.settings
+/backend/conectaTEA/.springBeans
+/backend/conectaTEA/.sts4-cache
+/backend/conectaTEA/bin/
+!backend/conectaTEA/src/main/**/bin/
+/backend/conectaTEA/src/test/**/bin/
+
+### IntelliJ IDEA ###
+/backend/conectaTEA/.idea/
+/backend/conectaTEA/*.iws
+/backend/conectaTEA/*.iml
+/backend/conectaTEA/*.ipr
+/backend/conectaTEA/out/
+!backend/conectaTEA/src/main/**/out/
+/backend/conectaTEA/src/test/**/out/
+
+### NetBeans ###
+/backend/conectaTEA/nbproject/private/
+/backend/conectaTEA/nbbuild/
+/backend/conectaTEA/dist/
+/backend/conectaTEA/nbdist/
+/backend/conectaTEA/.nb-gradle/
+
+### VS Code ###
+/backend/conectaTEA/.vscode/
+
