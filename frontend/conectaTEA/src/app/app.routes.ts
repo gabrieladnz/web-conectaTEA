@@ -1,4 +1,7 @@
+// Libs
 import { Routes } from '@angular/router';
+
+// Components
 import { RegisterComponent } from './modules/register/register.component';
 import { LoginComponent } from './modules/login/login.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
