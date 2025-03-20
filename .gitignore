@@ -23,14 +23,6 @@
 /frontend/conectaTEA/.settings/
 /frontend/conectaTEA/*.sublime-workspace
 
-# Visual Studio Code
-/frontend/conectaTEA/.vscode/*
-!/frontend/conectaTEA/.vscode/settings.json
-!/frontend/conectaTEA/.vscode/tasks.json
-!/frontend/conectaTEA/.vscode/launch.json
-!/frontend/conectaTEA/.vscode/extensions.json
-/frontend/conectaTEA/.history/*
-
 # Miscellaneous
 /frontend/conectaTEA/.angular/cache
 /frontend/conectaTEA/.sass-cache/
@@ -80,7 +72,3 @@
 /backend/conectaTEA/dist/
 /backend/conectaTEA/nbdist/
 /backend/conectaTEA/.nb-gradle/
-
-### VS Code ###
-/backend/conectaTEA/.vscode/
-
