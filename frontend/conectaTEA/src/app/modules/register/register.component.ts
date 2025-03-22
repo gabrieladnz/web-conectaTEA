@@ -14,6 +14,7 @@ import {
 
 // Components
 import { AuthButtonComponent } from '../../shared/components/button/auth-button/auth-button.component';
+import { BackgroundParticlesComponent } from '../../shared/components/background-particles/background-particles.component';
 
 @Component({
     selector: 'app-register',
@@ -25,6 +26,7 @@ import { AuthButtonComponent } from '../../shared/components/button/auth-button/
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
+        BackgroundParticlesComponent,
     ],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss',
