@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AuthButtonComponent {
     @Input() labelButton: string = '';
+    @Input() disabledButton: boolean = false;
     @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 
     /**
