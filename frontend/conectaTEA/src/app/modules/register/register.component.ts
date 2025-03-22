@@ -3,7 +3,7 @@ import { Component, signal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
     FormBuilder,
     FormGroup,
@@ -13,8 +13,11 @@ import {
 } from '@angular/forms';
 
 // Components
-import { AuthButtonComponent } from '../../shared/components/button/auth-button/auth-button.component';
+import { AuthButtonComponent } from '../../shared/components/buttons/auth-button/auth-button.component';
 import { BackgroundParticlesComponent } from '../../shared/components/background-particles/background-particles.component';
+
+// Services
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
     selector: 'app-register',
@@ -37,9 +40,13 @@ export class RegisterComponent {
     protected errorMessagePassword = signal('');
     protected hide: boolean = true;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private authentication: AuthService,
+        private router: Router,
+    ) {
         this.formRegister = this.formBuilder.group({
-            user: ['', [Validators.required]],
+            username: ['', [Validators.required]],
             email: ['', [Validators.email]],
             password: ['', [Validators.minLength(6)]],
         });
@@ -67,7 +74,12 @@ export class RegisterComponent {
     /**
      * @description Função de cadastro de usuário
      */
-    protected register(): void {
-        /** TODO: Implementar funcao de cadastro */
+    protected async register(): Promise<void> {
+        if (this.formRegister.valid) {
+            await this.authentication.register(this.formRegister.value);
+            this.router.navigate(['/dashboard']);
+        } else {
+            console.error('Formulário inválido');
+        }
     }
 }

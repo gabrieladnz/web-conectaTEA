@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Libs
 import { Component } from '@angular/core';
 import { NgxParticlesModule } from '@tsparticles/angular';
@@ -57,7 +58,7 @@ export class BackgroundParticlesComponent {
                     default: OutMode.bounce,
                 },
                 random: false,
-                speed: 6,
+                speed: 2,
                 straight: false,
             },
             number: {
@@ -65,7 +66,7 @@ export class BackgroundParticlesComponent {
                     enable: true,
                     area: 800,
                 },
-                value: 200,
+                value: 250,
             },
             opacity: {
                 value: 0.5,
@@ -86,7 +87,5 @@ export class BackgroundParticlesComponent {
         });
     }
 
-    public particlesLoaded(container: Container): void {
-        console.log(container);
-    }
+    public particlesLoaded(container: Container): void {}
 }
