@@ -40,7 +40,21 @@ export class AuthService extends ApiService {
         }
     }
 
-    public async login(body: LoginRequest): Promise<void> {
-        /** TODO: Implemente a função de login aqui com sua devida rota, método e interface */
+    /**
+     * @description Realiza o login do usuário
+     */
+    public async login(body: LoginRequest): Promise<LoginResponse> {
+        try {
+            return await lastValueFrom(
+                this.post<LoginResponse>('auth/login', body),
+            );
+        } catch (error) {
+            const errorResponse = {
+                success: false,
+                message: error,
+            };
+
+            throw errorResponse;
+        }
     }
 }
