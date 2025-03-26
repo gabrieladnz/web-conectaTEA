@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 export interface RegisterRequest {
     username: string;
     email: string;
@@ -8,13 +7,20 @@ export interface RegisterRequest {
 export interface RegisterResponse {
     success: boolean;
     message: string;
-    /** TODO: Alinhar com o Back se mais dados serão retornados */
 }
 
 export interface LoginRequest {
-    /** TODO: Implemente a interface */
+    username: string;
+    password: string;
 }
 
 export interface LoginResponse {
-    /** TODO: Implemente a interface */
+    success: boolean;
+    message: string;
+    token: string;
+}
+
+export interface LogoutResponse {
+    success: boolean;
+    message: string;
 }

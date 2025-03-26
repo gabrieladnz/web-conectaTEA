@@ -18,8 +18,10 @@ export class ApiService {
         return this.http.get<T>(`${this.BASE_URL}/${url}`);
     }
 
-    public post<T>(url: string, body: unknown): Observable<T> {
-        return this.http.post<T>(`${this.BASE_URL}/${url}`, body);
+    public post<T>(url: string, body?: unknown, token?: string): Observable<T> {
+        return this.http.post<T>(`${this.BASE_URL}/${url}`, body, {
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        });
     }
 
     public put<T>(url: string, body: unknown): Observable<T> {

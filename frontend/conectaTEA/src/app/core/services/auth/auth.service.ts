@@ -10,6 +10,7 @@ import { ApiService } from '../../api/api.service';
 import {
     LoginRequest,
     LoginResponse,
+    LogoutResponse,
     RegisterRequest,
     RegisterResponse,
 } from './auth.interface';
@@ -40,7 +41,44 @@ export class AuthService extends ApiService {
         }
     }
 
-    public async login(body: LoginRequest): Promise<void> {
-        /** TODO: Implemente a função de login aqui com sua devida rota, método e interface */
+    /**
+     * @description Realiza o login do usuário
+     */
+    public async login(body: LoginRequest): Promise<LoginResponse> {
+        try {
+            return await lastValueFrom(
+                this.post<LoginResponse>('auth/login', body),
+            );
+        } catch (error) {
+            const errorResponse = {
+                success: false,
+                message: error,
+            };
+
+            throw errorResponse;
+        }
+    }
+
+    /**
+     * @description Realiza o logout do usuário
+     */
+    public async logout(): Promise<LogoutResponse> {
+        try {
+            /** TODO: Ajustar esses pontos para a lógica desenvolvida na hora de lidar com os tokens */
+            const token: string | null = localStorage.getItem('token');
+
+            if (!token) throw new Error('Token de autenticação não encontrado');
+
+            return await lastValueFrom(
+                this.post<LogoutResponse>('auth/logout', {}, token),
+            );
+        } catch (error) {
+            const errorResponse = {
+                success: false,
+                message: error,
+            };
+
+            throw errorResponse;
+        }
     }
 }
