@@ -77,7 +77,7 @@ export class RegisterComponent {
     protected async register(): Promise<void> {
         if (this.formRegister.valid) {
             await this.authentication.register(this.formRegister.value);
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/login']);
         } else {
             console.error('Formulário inválido');
         }
