@@ -10,6 +10,7 @@ import conectaTEA.conectaTEA.models.User;
 import conectaTEA.conectaTEA.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +20,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements BaseService<UserDTO, UserDTOResponse> {
+public class UserService{
 
     private final UserRepository userRepository;
 
@@ -39,8 +41,7 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public void create(UserDTO object) {
+    public UserDTOResponse create(UserDTO object) {
         try {
             Optional<User> existingUser = userRepository.findUserByUsername(object.username());
             if (existingUser.isPresent()) {
@@ -62,12 +63,15 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
                     .createdAt(LocalDateTime.now())
                     .build();
             userRepository.save(user);
+
+
+
+            return UserDTOResponse.fromEntity(user);
         } catch (Exception e) {
             throw new BusinessException("Erro ao criar usuário");
         }
     }
 
-    @Override
     public UserDTOResponse getById(Long id) {
         try {
             Optional<User> user = userRepository.findById(id);
@@ -81,7 +85,6 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
         }
     }
 
-    @Override
     public List<UserDTOResponse> getAll() {
         try {
             return userRepository.findAll().stream()
@@ -92,8 +95,8 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
         }
     }
 
-    @Override
-    public void update(Long id, UserDTO object) {
+
+    public UserDTOResponse update(Long id, UserDTO object) {
         try {
             Optional<User> user = userRepository.findById(id);
             if (user.isPresent()) {
@@ -101,6 +104,7 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
                 user.get().setUsername(object.username());
                 user.get().setEmail(object.email());
                 userRepository.save(user.get());
+                return UserDTOResponse.fromEntity(user.get());
             } else {
                 throw new BusinessException("Usuário não encontrado");
             }
@@ -109,7 +113,7 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
         }
     }
 
-    @Override
+
     public void delete(Long id) {
         try {
             Optional<User> user = userRepository.findById(id);
@@ -133,13 +137,19 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
     }
 
     public TokenDTO login (LoginDTO object) {
+
+        TokenDTO token = userHasToken(object.username());
+        if (token != null) {
+            return token;
+        }
         Optional<User> userDb = userRepository.findUserByUsername(object.username());
         if (userDb.isPresent()) {
             User user = userDb.get();
             var userPassword = new UsernamePasswordAuthenticationToken(user.getUsername(), object.password());
              try{
                  Authentication authentication = authenticationManager.authenticate(userPassword);
-                 TokenDTO token = tokenService.generateToken((User) authentication.getPrincipal());
+                 token = tokenService.generateToken((User) authentication.getPrincipal());
+                 tokenService.saveToken(user.getUsername(), token.token(), token.expiration().toEpochMilli());
                  return token;
              } catch (BadCredentialsException e){
                     throw new BusinessException("Usuário ou senha inválidos");
@@ -148,4 +158,21 @@ public class UserService implements BaseService<UserDTO, UserDTOResponse> {
             throw new BusinessException("Usuário não encontrado");
         }
     }
+
+    public void logout() {
+        String username = tokenService.getAuthenticatedUserId().getUsername();
+        tokenService.deleteToken(username);
+    }
+
+    private TokenDTO userHasToken(String username) {
+        String token = tokenService.getToken(username);
+        if (token != null) {
+            return TokenDTO.builder()
+                    .token(token)
+                    .expiration(Instant.ofEpochMilli(tokenService.getTokenExpiration(username)))
+                    .build();
+        }
+        return null;
+    }
+
 }

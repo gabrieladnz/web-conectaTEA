@@ -46,6 +46,9 @@ public class SecurityFilter extends OncePerRequestFilter {
                 if(user.isEmpty()){
                     throw new Exception("User not found");
                 }
+                if(tokenService.getToken(user.get().getUsername()).isEmpty()){
+                    throw new Exception("Token not found");
+                }
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.get().getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
