@@ -14,10 +14,23 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - postgres_network
+      - app_network
+
+  redis:
+    image: redis:latest
+    container_name: redis_cache
+    restart: always
+    environment:
+      REDIS_PASSWORD: admin@#
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
 
 volumes:
   postgres_data:
+  redis_data:
 
 networks:
-  postgres_network:
+  app_network:
+    driver: bridge
