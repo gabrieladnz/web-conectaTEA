@@ -1,0 +1,39 @@
+.dashboard {
+    display: flex;
+
+    &__content {
+        width: 100%;
+        padding: 2em;
+        background-color: #f6f7fb;
+
+        &__title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        &__card {
+            &--info {
+                display: flex;
+                width: 60%;
+                justify-content: space-between;
+                background-color: #c3c0f9;
+                border-radius: 35px;
+            }
+        }
+
+        &__room {
+            &__title {
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+
+        &__suggested {
+            &__title {
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+    }
+}

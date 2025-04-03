@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     background-color: #A8D8FF;
     padding: 0.4em;
     height: 100vh;
@@ -9,7 +10,7 @@
 
     &__logo {
         img {
-            width: 60px;
+            width: 55px;
         }
     }
 
