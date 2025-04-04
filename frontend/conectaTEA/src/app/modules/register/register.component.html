@@ -10,6 +10,11 @@
 
         <form class="register__container__form" [formGroup]="formRegister">
             <mat-form-field color="accent">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Nome" formControlName="name" required>
+            </mat-form-field>
+
+            <mat-form-field color="accent">
                 <mat-label>Usuário</mat-label>
                 <input matInput placeholder="Usuário" formControlName="username" required>
             </mat-form-field>

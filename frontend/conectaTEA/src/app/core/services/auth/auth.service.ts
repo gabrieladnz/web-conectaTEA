@@ -29,7 +29,7 @@ export class AuthService extends ApiService {
     public async register(body: RegisterRequest): Promise<RegisterResponse> {
         try {
             return await lastValueFrom(
-                this.post<RegisterResponse>('auth/register', body),
+                this.post<RegisterResponse>('users/save', body),
             );
         } catch (error) {
             const errorResponse = {
@@ -47,7 +47,7 @@ export class AuthService extends ApiService {
     public async login(body: LoginRequest): Promise<LoginResponse> {
         try {
             return await lastValueFrom(
-                this.post<LoginResponse>('auth/login', body),
+                this.post<LoginResponse>('users/login', body),
             );
         } catch (error) {
             const errorResponse = {
@@ -70,7 +70,7 @@ export class AuthService extends ApiService {
             if (!token) throw new Error('Token de autenticação não encontrado');
 
             return await lastValueFrom(
-                this.post<LogoutResponse>('auth/logout', {}, token),
+                this.post<LogoutResponse>('users/logout', {}, token),
             );
         } catch (error) {
             const errorResponse = {

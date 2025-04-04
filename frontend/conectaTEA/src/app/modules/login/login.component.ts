@@ -58,7 +58,6 @@ export class LoginComponent {
             await this.authentication.login(this.formLogin.value);
             this.router.navigate(['/dashboard']);
         } else {
-            console.error('Formulário inválido');
             this.formLogin.controls['password'].setErrors({
                 invalidLogin: true,
             });
