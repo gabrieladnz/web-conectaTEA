@@ -1,12 +1,12 @@
 package conectaTEA.conectaTEA.dtos;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 @Builder
 public record LoginDTO(
         @NotNull(message = "Favor informar username") String username,
-        @NotNull(message = "Favor informar a password") @Min(value = 6, message = "no minimo 6 digitos") String password
+        @NotNull(message = "Favor informar a password") @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres.") String password
 ) {
 }
