@@ -1,25 +1,22 @@
 package conectaTEA.conectaTEA.config;
 
-import conectaTEA.conectaTEA.controllers.UserWebSocketHandler;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final UserWebSocketHandler userWebSocketHandler;
-
-    public WebSocketConfig(UserWebSocketHandler userWebSocketHandler) {
-        this.userWebSocketHandler = userWebSocketHandler;
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker("/topic"); // Define um broker simples para mensagens
+        registry.setApplicationDestinationPrefixes("/app"); // Prefixo para mensagens enviadas pelos clientes
     }
 
     @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(userWebSocketHandler, "/ws/user").setAllowedOrigins("*");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/websocket-chat").setAllowedOrigins("*").withSockJS(); // Define o endpoint do WebSocket
     }
 }
 

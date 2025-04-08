@@ -1,7 +1,7 @@
 package conectaTEA.conectaTEA.controllers;
 
 import conectaTEA.conectaTEA.dtos.*;
-import conectaTEA.conectaTEA.services.UserService;
+import conectaTEA.conectaTEA.services.rest.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

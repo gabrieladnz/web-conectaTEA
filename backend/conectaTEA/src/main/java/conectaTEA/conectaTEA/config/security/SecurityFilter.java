@@ -1,7 +1,6 @@
 package conectaTEA.conectaTEA.config.security;
 
 import conectaTEA.conectaTEA.repositories.UserRepository;
-import conectaTEA.conectaTEA.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

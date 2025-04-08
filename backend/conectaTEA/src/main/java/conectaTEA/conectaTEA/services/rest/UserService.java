@@ -1,4 +1,4 @@
-package conectaTEA.conectaTEA.services;
+package conectaTEA.conectaTEA.services.rest;
 
 import conectaTEA.conectaTEA.config.security.TokenService;
 import conectaTEA.conectaTEA.dtos.LoginDTO;
@@ -10,7 +10,6 @@ import conectaTEA.conectaTEA.models.User;
 import conectaTEA.conectaTEA.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -173,6 +172,10 @@ public class UserService{
                     .build();
         }
         return null;
+    }
+
+    public Optional<User> findByUsername(String username){
+        return userRepository.findUserByUsername(username);
     }
 
 }

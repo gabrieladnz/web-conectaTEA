@@ -1,6 +1,5 @@
-package conectaTEA.conectaTEA.services;
+package conectaTEA.conectaTEA.services.rest;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
