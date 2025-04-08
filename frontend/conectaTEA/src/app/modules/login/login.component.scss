@@ -1,0 +1,92 @@
+.login {
+    background-color: #A8D8FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    &__container {
+        background-color: #F5F5F5;
+        border-radius: 40px;
+        width: 35%;
+        padding: 1em;
+        text-align: center;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        z-index: 1;
+
+        &__logo {
+            img {
+                width: 200px;
+            }
+        }
+
+        &__title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        &__form {
+            display: flex;
+            flex-direction: column;
+            padding: 2em;
+
+            input,
+            mat-label {
+                font-size: 14px;
+            }
+
+            &__span {
+                font-size: 12px;
+                margin-bottom: 2em;
+                text-align: right;
+
+                span {
+                    cursor: pointer;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .login {
+        &__container {
+            width: 50%;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login {
+        &__container {
+            width: 60%;
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .login {
+        &__container {
+            width: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .login {
+        padding: 1em;
+
+        &__container {
+            width: auto;
+            padding: auto;
+        }
+
+        &__logo {
+            img {
+                width: 45%;
+            }
+        }
+    }
+}
