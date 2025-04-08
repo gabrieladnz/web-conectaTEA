@@ -44,7 +44,7 @@ public class Room {
     List<RoomUsers> users;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<RoomInvites> invites;
+    List<RoomInvite> invites;
 
 
 

@@ -4,10 +4,13 @@ import conectaTEA.conectaTEA.config.security.TokenService;
 import conectaTEA.conectaTEA.dtos.RoomDto;
 import conectaTEA.conectaTEA.dtos.RoomDtoResponse;
 import conectaTEA.conectaTEA.dtos.UserDTOResponse;
+import conectaTEA.conectaTEA.enumerators.StatusInviteEnum;
 import conectaTEA.conectaTEA.exceptions.BusinessException;
 import conectaTEA.conectaTEA.models.Room;
+import conectaTEA.conectaTEA.models.RoomInvite;
 import conectaTEA.conectaTEA.models.RoomUsers;
 import conectaTEA.conectaTEA.models.User;
+import conectaTEA.conectaTEA.repositories.RoomInvitesRepository;
 import conectaTEA.conectaTEA.repositories.RoomRepository;
 import conectaTEA.conectaTEA.services.websocket.WebSocketService;
 import jakarta.transaction.Transactional;
@@ -30,15 +33,18 @@ public class RoomService {
 
     private final WebSocketService webSocketService; // Injetando o WebSocketService
 
-    public RoomService(RoomRepository roomRepository, TokenService tokenService, UserService userService, WebSocketService webSocketService) {
+    private final RoomInvitesRepository roomInvitesRepository;
+
+    public RoomService(RoomRepository roomRepository, TokenService tokenService, UserService userService, WebSocketService webSocketService, RoomInvitesRepository roomInvitesRepository) {
         this.roomRepository = roomRepository;
+        this.roomInvitesRepository = roomInvitesRepository;
         this.tokenService = tokenService;
         this.userService = userService;
         this.webSocketService = webSocketService;
     }
     @Transactional
-    public RoomDtoResponse createRoom (RoomDto roomDto){
-        try{
+    public RoomDtoResponse createRoom(RoomDto roomDto) {
+        try {
             User userAuthenticated = tokenService.getAuthenticatedUserId();
             List<RoomUsers> userList = new ArrayList<>();
 
@@ -50,39 +56,42 @@ public class RoomService {
                     .owner(userAuthenticated)
                     .build();
 
-            roomDto.usernames().forEach(
-                    username -> {
-                        User user = userService.findByUsername(username)
-                                .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
-                        if (user.getId().equals(userAuthenticated.getId())){
-                            throw new BusinessException("Usuário não pode ser o dono da sala");
-                        }
-                        userList.add(RoomUsers.builder()
-                                .user(user)
-                                .createdAt(LocalDateTime.now())
-                                .room(room)
-                                .build());
-                    }
-            );
-            room.setUsers(userList);
-
             roomRepository.save(room);
 
+            // Cria convites apenas se a lista de usernames não estiver vazia
+            if (roomDto.usernames() != null && !roomDto.usernames().isEmpty()) {
+                roomDto.usernames().forEach(username -> {
+                    User recipient = userService.findByUsername(username)
+                            .orElseThrow(() -> new BusinessException("Usuário '" + username + "' não encontrado"));
 
-            // Criando o objeto de resposta para enviar via WebSocket
+                    if (recipient.getId().equals(userAuthenticated.getId())) {
+                        throw new BusinessException("O dono da sala não deve estar na lista de participantes.");
+                    }
+
+                    RoomInvite invite = new RoomInvite();
+                    invite.setRoom(room);
+                    invite.setSender(userAuthenticated);
+                    invite.setRecipient(recipient);
+                    invite.setStatus(StatusInviteEnum.PENDING);
+                    invite.setCreatedAt(LocalDateTime.now());
+
+                    roomInvitesRepository.save(invite);
+                });
+
+            }
             RoomDtoResponse response = new RoomDtoResponse(
                     room.getId(),
                     room.getName(),
                     room.getDescription(),
                     room.getRoomType(),
-                    room.getUsers().stream().map(RoomUsers::getUser).map(UserDTOResponse::fromEntity).toList()
+                    List.of(UserDTOResponse.fromEntity(userAuthenticated))
             );
 
             webSocketService.notifyNewRoom(response);
-
             return response;
 
-        } catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new BusinessException("Erro ao criar sala");
         }
     }

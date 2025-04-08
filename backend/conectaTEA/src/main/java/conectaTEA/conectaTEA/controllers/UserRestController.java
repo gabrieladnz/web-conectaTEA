@@ -58,6 +58,7 @@ public class UserRestController {
             TokenDTO token = userService.login(loginDTO);
             return ResponseEntity.status(HttpStatus.OK).body(token);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("Erro ao logar");
         }
     }
@@ -68,6 +69,16 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.OK).body("Logout realizado com sucesso");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao realizar logout");
+        }
+    }
+    @GetMapping("/validate-username")
+    public ResponseEntity<String> validateUsername(@RequestParam String username) {
+        boolean exists = userService.doesUsernameExist(username);
+
+        if (exists) {
+            return ResponseEntity.ok("Usuário encontrado");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
     }
 }

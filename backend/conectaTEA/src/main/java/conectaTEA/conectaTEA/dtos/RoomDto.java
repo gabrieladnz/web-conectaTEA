@@ -12,6 +12,4 @@ public record RoomDto(
        @NotNull(message = "Provide roomType") TypeRoomEnum roomType,
         List<@Min(value = 1, message = "Please provide usernames") String> usernames
 ) {
-
-
 }
