@@ -5,10 +5,16 @@ import { MatButtonModule } from '@angular/material/button';
 
 // Components
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
+import { CalendarComponent } from '../../shared/components/calendar/calendar.component';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [SidebarComponent, RouterModule, MatButtonModule],
+    imports: [
+        SidebarComponent,
+        RouterModule,
+        MatButtonModule,
+        CalendarComponent,
+    ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
 })

@@ -1,5 +1,8 @@
+// Libs
 import { Component } from '@angular/core';
-import { SidebarComponent } from "../../shared/components/sidebar/sidebar.component";
+
+// Components
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 
 @Component({
     selector: 'app-chat',
@@ -7,6 +10,4 @@ import { SidebarComponent } from "../../shared/components/sidebar/sidebar.compon
     templateUrl: './chat.component.html',
     styleUrl: './chat.component.scss',
 })
-export class ChatComponent {
-
-}
+export class ChatComponent {}
