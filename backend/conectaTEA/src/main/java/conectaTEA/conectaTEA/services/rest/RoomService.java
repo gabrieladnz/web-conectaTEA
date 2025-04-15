@@ -56,6 +56,14 @@ public class RoomService {
                     .owner(userAuthenticated)
                     .build();
 
+            RoomUsers roomUsers = RoomUsers.builder()
+                    .user(userAuthenticated)
+                    .createdAt(LocalDateTime.now())
+                    .room(room)
+                    .build();
+
+            room.setUsers(List.of(roomUsers));
+
             roomRepository.save(room);
 
             // Cria convites apenas se a lista de usernames não estiver vazia
@@ -84,7 +92,9 @@ public class RoomService {
                     room.getName(),
                     room.getDescription(),
                     room.getRoomType(),
-                    List.of(UserDTOResponse.fromEntity(userAuthenticated))
+                    room.getUsers().stream()
+                            .map(user -> UserDTOResponse.fromEntity(user.getUser()))
+                            .toList()
             );
 
             webSocketService.notifyNewRoom(response);
@@ -129,4 +139,11 @@ public class RoomService {
         throw new BusinessException("User not found");
     }
 
+    protected Room findRoomById(Long id){
+        Optional<Room> room = roomRepository.findById(id);
+        if (room.isEmpty()){
+            throw new BusinessException("Room not found");
+        }
+        return room.get();
+    }
 }
