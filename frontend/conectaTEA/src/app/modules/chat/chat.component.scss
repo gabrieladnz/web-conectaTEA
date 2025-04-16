@@ -1,0 +1,92 @@
+.chat {
+    display: flex;
+
+    &__list {
+        width: 25%;
+        // padding: 2em;
+        background-color: #f6f7fb;
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            padding: 1em;
+
+            h3 {
+                font-size: 22px;
+                font-weight: 500;
+            }
+
+            button {
+                border: none;
+                background: none;
+                cursor: pointer;
+                color: #ffa54e;
+            }
+        }
+
+        &__search-bar {
+            border-top: 1px solid #d1d7db;
+            position: relative;
+            // max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+
+            &__input {
+                width: 95%;
+                margin-top: 10px;
+                padding: 10px 40px 10px 15px;
+                border: none;
+                // border: 1px solid #ccc;
+                border-radius: 10px;
+                // background-color: #fff;
+                font-size: 14px;
+                // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                outline: none;
+            }
+        }
+
+        &__conversation {
+            margin-top: 10px;
+            overflow-y: auto;
+
+            &__info {
+                background-color: white;
+                padding: 1em;
+                border-bottom: 1px solid #d1d7db;
+                font-size: 14px;
+                cursor: pointer;
+
+                &__header {
+                    display: flex;
+                    justify-content: space-between;
+
+                    &__name {}
+
+                    &__time {
+                        font-size: 13px;
+                    }
+                }
+
+                &__message {
+                    &__content {
+                        color: #667781;
+                    }
+                }
+            }
+        }
+    }
+
+    &__content {
+        // padding: 2em;
+
+        &__header {
+            background-color: #f6f7fb;
+
+        }
+
+        &__message-input {
+
+        }
+
+    }
+}
