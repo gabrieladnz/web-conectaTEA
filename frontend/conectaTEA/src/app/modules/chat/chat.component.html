@@ -1,3 +1,62 @@
-<main>
+<main class="chat">
     <app-sidebar></app-sidebar>
+
+    <section class="chat__list">
+        <div class="chat__list__header">
+            <h3>Conversas</h3>
+
+            <button mat-icon-button>
+                <!-- TODO: Chamar modal de criação de sala  -->
+                <mat-icon>add_comment</mat-icon>
+            </button>
+        </div>
+
+        <header class="chat__list__search-bar">
+            <!-- TODO: Implementar barra de pesquisa -->
+            <input type="text" placeholder="Pesquisar conversa..." class="chat__list__search-bar__input" />
+        </header>
+
+        <div class="chat__list__conversation">
+            <!-- Conversa ativa -->
+            <div class="chat__list__conversation__info active">
+                <div class="chat__list__conversation__info__header">
+                    <span class="chat__list__conversation__info__header__name">Maria Silva</span>
+                    <span class="chat__list__conversation__info__header__time">10:20</span>
+                </div>
+                <article class="chat__list__conversation__info__message">
+                    <span class="chat__list__conversation__info__message__content">Olá! Como você está hoje?</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="chat__content">
+        <div class="chat__content__header">
+            <!-- Header informações -->
+            <span>Maria Silva</span>
+        </div>
+
+        <div class="chat__content__messages">
+            <!-- Mensagens -->
+            <div class="message message--received">
+                <div class="message__content">Olá! Como você está hoje?</div>
+                <div class="message__time">10:15</div>
+            </div>
+
+            <div class="message message--sent">
+                <div class="message__content">Oi Maria! Estou bem, obrigado por perguntar. E você?</div>
+                <div class="message__time">10:16</div>
+            </div>
+        </div>
+
+        <footer class="chat__content__message-input">
+            <form>
+                <textarea matInput #messageInputArea placeholder="Digite uma mensagem..." rows="1"
+                    (input)="autoResize()"></textarea>
+                <button mat-icon-button type="submit">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </form>
+        </footer>
+    </section>
 </main>

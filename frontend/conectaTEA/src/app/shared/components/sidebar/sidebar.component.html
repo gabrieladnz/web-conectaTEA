@@ -6,7 +6,7 @@
     <section class="sidebar__menu">
         <div class="sidebar__menu__item">
             <button mat-icon-button routerLink="/dashboard" routerLinkActive="active">
-                <span class="material-symbols-outlined">family_home</span>
+                <span class="material-symbols-outlined">dashboard</span>
             </button>
 
             <button mat-icon-button routerLink="/chat" routerLinkActive="active">
@@ -15,13 +15,13 @@
         </div>
 
         <div class="sidebar__menu__item">
-            <button mat-icon-button (onClick)="logout()">
-                <mat-icon>arrow_forward</mat-icon>
+            <button mat-icon-button (click)="logout()">
+                <mat-icon>logout</mat-icon>
             </button>
 
             <hr>
 
-            <button mat-icon-button (onClick)="openHelp()">
+            <button mat-icon-button (click)="openHelp()">
                 <span class="material-symbols-outlined">help</span>
             </button>
         </div>
