@@ -1,0 +1,49 @@
+<app-background-particles></app-background-particles>
+
+<main class="register">
+    <section class="register__container">
+        <figure class="register__container__logo">
+            <img src="assets/images/logo-complete.svg" alt="Logo ConectaTEA">
+        </figure>
+
+        <h1 class="register__container__title">Crie sua conta para começar</h1>
+
+        <form class="register__container__form" [formGroup]="formRegister">
+            <mat-form-field color="accent">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Nome" formControlName="name" required>
+            </mat-form-field>
+
+            <mat-form-field color="accent">
+                <mat-label>Usuário</mat-label>
+                <input matInput placeholder="Usuário" formControlName="username" required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" placeholder="E-mail" type="email" (blur)="updateErrorMessage()"
+                    required />
+                @if (formRegister.controls['email'].invalid) {
+                <mat-error>{{ errorMessageEmail() }}</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input matInput formControlName="password" placeholder="Senha" [type]="hide ? 'password' : 'text'"
+                    (blur)="updateErrorMessage()" required>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                @if (formRegister.controls['password'].invalid) {
+                <mat-error>{{ errorMessagePassword() }}</mat-error>
+                }
+            </mat-form-field>
+
+            <p class="register__container__form__span">Possui uma conta? <span routerLink="/auth/login">Faça login.</span>
+            </p>
+
+            <app-auth-button [labelButton]="'Cadastro'" [disabledButton]="this.formRegister.invalid"
+                (onClick)="register()"></app-auth-button>
+        </form>
+    </section>
+</main>

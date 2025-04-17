@@ -1,0 +1,34 @@
+<app-background-particles></app-background-particles>
+
+<main class="login">
+    <section class="login__container">
+        <figure class="login__container__logo">
+            <img src="assets/images/logo-complete.svg" alt="Logo ConectaTEA">
+        </figure>
+
+        <h1 class="login__container__title">Bem-vindo(a) de volta!<br>Faça login para acessar sua conta.</h1>
+
+        <form class="login__container__form" [formGroup]="formLogin">
+            <mat-form-field color="accent">
+                <mat-label>Usuário</mat-label>
+                <input matInput placeholder="Usuário" formControlName="username" required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input matInput formControlName="password" placeholder="Senha" [type]="hide ? 'password' : 'text'" required>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                @if (formLogin.controls['password'].hasError('invalidLogin')) {
+                <mat-error>{{ errorMessagePassword() }}</mat-error>
+                }
+            </mat-form-field>
+
+            <p class="login__container__form__span">Ainda não tem uma conta? <span routerLink="/auth/register">Crie uma conta.</span>
+            </p>
+
+            <app-auth-button [labelButton]="'Entrar'" [disabledButton]="this.formLogin.invalid"
+                (onClick)="login()"></app-auth-button>
+        </form>
+    </section>
+</main>

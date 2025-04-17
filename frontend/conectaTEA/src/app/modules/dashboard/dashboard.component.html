@@ -1,0 +1,156 @@
+<main class="dashboard">
+    <app-sidebar></app-sidebar>
+
+    <section class="dashboard__content">
+        <h1 class="dashboard__content__title">Bem-vindo(a) de volta, Fulano!</h1>
+
+        <section class="dashboard__content__card--info">
+            <div>
+                <p class="dashboard__content__card--info__title">Fácil, rápido e do seu jeito: crie uma sala
+                    personalizada para compartilhar ideias, trocar experiências
+                    e reunir pessoas com os mesmos interesses!</p>
+
+                <button class="dashboard__content__card--info__button" mat-raised-button (click)="createRoom()">Monte
+                    seu espaço</button>
+            </div>
+
+            <figure>
+                <img src="assets/images/people.svg" alt="Pessoas conversando">
+            </figure>
+        </section>
+
+        <section class="dashboard__content__room">
+            <h2 class="dashboard__content__room__title">Seus espaços de conversa</h2>
+            <!-- TODO: Implementar espaços de conversas alinhado com o back-end -->
+            <div class="dashboard__content__room__placeholder">
+                <!-- TODO: Remover dados mockados pós-integração -->
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Grupo de pais</h3>
+                        <span class="badge">Ativo</span>
+                    </div>
+                    <div class="room-card__content">
+                        Compartilhando experiências e soluções para o dia a dia com nossos pequenos.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>12 membros</span>
+                        </div>
+                        <button>Entrar</button>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Terapias alternativas</h3>
+                        <span class="badge">Novo</span>
+                    </div>
+                    <div class="room-card__content">
+                        Discutindo abordagens complementares e troca de experiências sobre terapias.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>8 membros</span>
+                        </div>
+                        <button>Entrar</button>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Educação inclusiva</h3>
+                        <span class="badge">Ativo</span>
+                    </div>
+                    <div class="room-card__content">
+                        Espaço para professores e cuidadores discutirem práticas de educação inclusiva.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>15 membros</span>
+                        </div>
+                        <button>Entrar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard__content__suggested">
+            <h2 class="dashboard__content__suggested__title">Salas de bate-papo que combinam com você</h2>
+
+            <!-- TODO: Implementar sugestão de salas alinhado com o back-end -->
+            <div class="dashboard__content__suggested__placeholder">
+                <!-- TODO: Remover dados mockados pós-integração -->
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Desenvolvimento infantil</h3>
+                        <span class="badge">Popular</span>
+                    </div>
+                    <div class="room-card__content">
+                        Conversas sobre marcos de desenvolvimento e estímulos adequados para cada fase.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>24 membros</span>
+                        </div>
+                        <button>Participar</button>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Nutrição especial</h3>
+                        <span class="badge">Crescendo</span>
+                    </div>
+                    <div class="room-card__content">
+                        Dicas e receitas adaptadas para crianças com necessidades alimentares específicas.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>16 membros</span>
+                        </div>
+                        <button>Participar</button>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Dicas de leitura</h3>
+                        <span class="badge">Novo</span>
+                    </div>
+                    <div class="room-card__content">
+                        Grupo para compartilhar referências de livros e materiais sobre desenvolvimento infantil.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>5 membros</span>
+                        </div>
+                        <button>Participar</button>
+                    </div>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>Atividades sensoriais</h3>
+                        <span class="badge">Popular</span>
+                    </div>
+                    <div class="room-card__content">
+                        Troca de ideias sobre brincadeiras e atividades que estimulam o desenvolvimento sensorial.
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>19 membros</span>
+                        </div>
+                        <button>Participar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
