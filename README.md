@@ -18,8 +18,13 @@ O projeto é composto por várias partes, cada uma com suas responsabilidades:
 ## 💡 Funcionalidades
 
 
-## 🖥️ Front-End
+## 🖥️ Front-End 
+- ### 📸 Dashboard
+![alt text](image.png)
 
+- ### 💬 Chat
+![alt text](image-1.png)
+---
 
 ## 🔙 Back-End
 
