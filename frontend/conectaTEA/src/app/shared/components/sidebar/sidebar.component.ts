@@ -2,6 +2,10 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
+// Components
+import { AboutConectateaModalComponent } from '../modals/info/about-conectatea-modal/about-conectatea-modal.component';
 
 // Services
 import { AuthService } from '../../../core/services/auth/auth.service';
@@ -16,7 +20,8 @@ export class SidebarComponent {
     constructor(
         private router: Router,
         private authentication: AuthService,
-    ) {}
+        private dialog: MatDialog,
+    ) { }
 
     /**
      * @description Realiza o logout do usuário
@@ -31,6 +36,10 @@ export class SidebarComponent {
      * @description Abre a modal de informações
      */
     protected openHelp(): void {
-        /** TODO: Implementar modal com informações sobre o site */
+        const modalRef = this.dialog.open(AboutConectateaModalComponent);
+
+        modalRef.componentInstance.close.subscribe(() => {
+            this.dialog.closeAll();
+        });
     }
 }
