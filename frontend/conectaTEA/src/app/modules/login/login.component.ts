@@ -18,6 +18,7 @@ import { AuthButtonComponent } from '../../shared/components/buttons/auth-button
 
 // Services
 import { AuthService } from '../../core/services/auth/auth.service';
+import { TokenService } from '../../core/services/token/token.service';
 
 @Component({
     selector: 'app-login',
@@ -43,6 +44,7 @@ export class LoginComponent {
         private formBuilder: FormBuilder,
         private authentication: AuthService,
         private router: Router,
+        private tokenService: TokenService,
     ) {
         this.formLogin = this.formBuilder.group({
             username: ['', [Validators.required]],
@@ -55,8 +57,17 @@ export class LoginComponent {
      */
     protected async login(): Promise<void> {
         if (this.formLogin.valid) {
-            await this.authentication.login(this.formLogin.value);
-            this.router.navigate(['/dashboard']);
+            try {
+                const loginResponse = await this.authentication.login(
+                    this.formLogin.value,
+                );
+                this.tokenService.save(loginResponse.token);
+                this.router.navigate(['/dashboard']);
+            } catch {
+                this.formLogin.controls['password'].setErrors({
+                    invalidLogin: true,
+                });
+            }
         } else {
             this.formLogin.controls['password'].setErrors({
                 invalidLogin: true,

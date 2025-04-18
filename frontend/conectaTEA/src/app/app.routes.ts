@@ -7,6 +7,9 @@ import { LoginComponent } from './modules/login/login.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { ChatComponent } from './modules/chat/chat.component';
 
+// Guards
+import { AuthGuard } from './core/guards/auth.guard';
+
 export const routes: Routes = [
     {
         path: '',
@@ -29,10 +32,12 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: 'chat',
         component: ChatComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: '**',

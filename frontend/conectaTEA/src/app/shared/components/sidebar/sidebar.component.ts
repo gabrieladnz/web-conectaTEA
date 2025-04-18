@@ -9,6 +9,7 @@ import { AboutConectateaModalComponent } from '../modals/info/about-conectatea-m
 
 // Services
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { TokenService } from '../../../core/services/token/token.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -21,15 +22,20 @@ export class SidebarComponent {
         private router: Router,
         private authentication: AuthService,
         private dialog: MatDialog,
-    ) { }
+        public tokenService: TokenService,
+    ) {}
 
     /**
      * @description Realiza o logout do usuário
      */
     protected async logout(): Promise<void> {
-        /** TODO: Validar método com integração */
-        await this.authentication.logout();
-        this.router.navigate(['/login']);
+        try {
+            await this.authentication.logout();
+        } catch (error) {
+            console.warn('Erro ao deslogar no backend:', error);
+        }
+
+        this.tokenService.logout();
     }
 
     /**

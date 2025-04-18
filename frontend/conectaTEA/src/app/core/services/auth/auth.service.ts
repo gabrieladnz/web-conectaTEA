@@ -64,8 +64,7 @@ export class AuthService extends ApiService {
      */
     public async logout(): Promise<LogoutResponse> {
         try {
-            /** TODO: Ajustar esses pontos para a lógica desenvolvida na hora de lidar com os tokens */
-            const token: string | null = localStorage.getItem('token');
+            const token: string | null = localStorage.getItem('auth_token');
 
             if (!token) throw new Error('Token de autenticação não encontrado');
 
