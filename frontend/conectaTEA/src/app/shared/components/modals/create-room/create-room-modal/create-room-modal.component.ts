@@ -1,7 +1,9 @@
+// Libs
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
     FormBuilder,
     FormGroup,
+    FormsModule,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
@@ -13,6 +15,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 
+// Services
+import { RoomService } from '../../../../../core/services/room/room.service';
+
 @Component({
     selector: 'app-create-room-modal',
     imports: [
@@ -23,6 +28,7 @@ import { CommonModule } from '@angular/common';
         MatFormFieldModule,
         ReactiveFormsModule,
         CommonModule,
+        FormsModule,
     ],
     templateUrl: './create-room-modal.component.html',
     styleUrls: ['./create-room-modal.component.scss'],
@@ -48,14 +54,16 @@ export class CreateRoomModalComponent implements OnInit {
     @Output() close = new EventEmitter<void>();
     @Output() create = new EventEmitter<unknown>();
 
-    roomForm: FormGroup;
-    formSubmitted = false;
-    selectedCategory: number | null = null;
+    protected roomForm: FormGroup;
+    protected formSubmitted = false;
+    protected selectedCategory!: string;
+    protected invitedUsers: string[] = [];
+    protected newUserToInvite: string = '';
 
-    categories = [
+    protected categories = [
         { id: 1, name: 'Educação' },
         { id: 2, name: 'Saúde' },
-        { id: 3, name: 'Tecnologia' },
+        { id: 3, name: 'Bate-papo' },
         { id: 4, name: 'Parentalidade' },
         { id: 5, name: 'Lazer' },
         { id: 6, name: 'Esportes' },
@@ -66,18 +74,24 @@ export class CreateRoomModalComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CreateRoomModalComponent>,
+        private roomService: RoomService,
     ) {
         this.roomForm = this.fb.group({
             name: ['', [Validators.required, Validators.maxLength(50)]],
             description: ['', [Validators.required, Validators.maxLength(200)]],
-            type: ['public', Validators.required],
+            roomType: ['public', Validators.required],
+            usernames: [[], Validators.required],
         });
     }
 
     ngOnInit(): void {}
 
     protected selectCategory(categoryId: number): void {
-        this.selectedCategory = categoryId;
+        const foundCategory = this.categories.find(
+            (category) => category.id === categoryId,
+        );
+
+        this.selectedCategory = foundCategory?.name || '';
     }
 
     protected closeModal(): void {
@@ -86,15 +100,39 @@ export class CreateRoomModalComponent implements OnInit {
         }, 200);
     }
 
+    protected addUserToInviteList(): void {
+        if (
+            this.newUserToInvite.trim() !== '' &&
+            !this.invitedUsers.includes(this.newUserToInvite.trim())
+        ) {
+            this.invitedUsers.push(this.newUserToInvite.trim());
+            this.newUserToInvite = '';
+            this.updateFormUsers();
+        }
+    }
+
+    protected removeUserFromList(index: number): void {
+        this.invitedUsers.splice(index, 1);
+        this.updateFormUsers();
+    }
+
+    private updateFormUsers(): void {
+        this.roomForm.patchValue({
+            usernames: this.invitedUsers,
+        });
+    }
+
     protected onSubmit(): void {
         this.formSubmitted = true;
 
         if (this.roomForm.valid && this.selectedCategory) {
             const roomData = {
                 ...this.roomForm.value,
-                categoryId: this.selectedCategory,
+                roomType: this.roomForm.value.roomType.toUpperCase(),
+                category: this.selectedCategory,
             };
 
+            this.roomService.createRoom(roomData);
             this.create.emit(roomData);
             this.closeModal();
         }

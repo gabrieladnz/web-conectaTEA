@@ -1,75 +1,35 @@
 // Libs
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 
 // Services
 import { ApiService } from '../../api/api.service';
 
-// Models
+// Interfaces
 import {
-    LoginRequest,
-    LoginResponse,
-    LogoutResponse,
-    RegisterRequest,
-    RegisterResponse,
-} from './auth.interface';
+    CreateRoomRequest,
+    CreateRoomResponse,
+    RoomDtoResponse,
+} from './room.interface';
 
 @Injectable({
     providedIn: 'root',
 })
-export class AuthService extends ApiService {
+export class RoomService extends ApiService {
     constructor(protected override http: HttpClient) {
         super(http);
     }
 
-    /**
-     * @description Cadastra um novo usuário
-     */
-    public async register(body: RegisterRequest): Promise<RegisterResponse> {
-        try {
-            return await lastValueFrom(
-                this.post<RegisterResponse>('users/save', body),
-            );
-        } catch (error) {
-            const errorResponse = {
-                success: false,
-                message: error,
-            };
-
-            throw errorResponse;
-        }
-    }
-
-    /**
-     * @description Realiza o login do usuário
-     */
-    public async login(body: LoginRequest): Promise<LoginResponse> {
-        try {
-            return await lastValueFrom(
-                this.post<LoginResponse>('users/login', body),
-            );
-        } catch (error) {
-            const errorResponse = {
-                success: false,
-                message: error,
-            };
-
-            throw errorResponse;
-        }
-    }
-
-    /**
-     * @description Realiza o logout do usuário
-     */
-    public async logout(): Promise<LogoutResponse> {
+    public async createRoom(
+        body: CreateRoomRequest,
+    ): Promise<CreateRoomResponse> {
         try {
             const token: string | null = localStorage.getItem('auth_token');
-
             if (!token) throw new Error('Token de autenticação não encontrado');
 
             return await lastValueFrom(
-                this.post<LogoutResponse>('users/logout', {}, token),
+                this.post<CreateRoomResponse>('rooms', body, token),
             );
         } catch (error) {
             const errorResponse = {
@@ -77,6 +37,36 @@ export class AuthService extends ApiService {
                 message: error,
             };
 
+            throw errorResponse;
+        }
+    }
+
+    public async listPublicRooms(): Promise<RoomDtoResponse[]> {
+        try {
+            // TODO: A rota deve usar BearerToken, após ajuste no Back
+            return await lastValueFrom(
+                this.get<RoomDtoResponse[]>('rooms/public'),
+            );
+        } catch (error) {
+            const errorResponse = {
+                success: false,
+                message: error,
+            };
+            throw errorResponse;
+        }
+    }
+
+    public async listRoomsByUser(userId: number): Promise<RoomDtoResponse[]> {
+        try {
+            // TODO: A rota deve usar BearerToken, após ajuste no Back
+            return await lastValueFrom(
+                this.get<RoomDtoResponse[]>(`rooms/my-rooms/${userId}`),
+            );
+        } catch (error) {
+            const errorResponse = {
+                success: false,
+                message: error,
+            };
             throw errorResponse;
         }
     }

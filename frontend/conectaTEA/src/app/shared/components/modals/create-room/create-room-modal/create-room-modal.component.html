@@ -34,17 +34,40 @@
 
                 <div class="form-group">
                     <label for="roomType">Tipo de sala</label>
-                    <mat-select id="roomType" formControlName="type" class="form-control">
+                    <mat-select id="roomType" formControlName="roomType" class="form-control">
                         <mat-option value="public">Pública (qualquer pessoa pode entrar)</mat-option>
                         <mat-option value="private">Privada (apenas com convite)</mat-option>
                     </mat-select>
                 </div>
 
                 <div class="form-group">
+                    <label for="inviteUsers">Convidar usuários</label>
+                    <div class="invite-users-container">
+                        <div class="invite-input-container">
+                            <input type="text" id="inviteUsers" placeholder="Digite o username" class="form-control"
+                                [(ngModel)]="newUserToInvite" [ngModelOptions]="{standalone: true}">
+                            <button type="button" class="btn-invite" (click)="addUserToInviteList()">
+                                <mat-icon>person_add</mat-icon>
+                                Convidar
+                            </button>
+                        </div>
+
+                        <div class="invited-users-list" *ngIf="invitedUsers.length > 0">
+                            <div class="invited-user-chip" *ngFor="let user of invitedUsers; let i = index">
+                                {{ user }}
+                                <button class="remove-user" (click)="removeUserFromList(i)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Categoria</label>
                     <div class="categories-container">
                         <div *ngFor="let category of categories" class="category-chip"
-                            [class.selected]="selectedCategory === category.id" (click)="selectCategory(category.id)">
+                            [class.selected]="selectedCategory === category.name" (click)="selectCategory(category.id)">
                             {{ category.name }}
                         </div>
                     </div>
