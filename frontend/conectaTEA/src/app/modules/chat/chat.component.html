@@ -14,27 +14,33 @@
             <!-- TODO: Implementar barra de pesquisa -->
             <input type="text" placeholder="Pesquisar conversa..." class="chat__list__search-bar__input" />
         </header>
-
+        <!-- Lista de conversas  -->
         <div class="chat__list__conversation">
-            <!-- Conversa ativa -->
-            <div class="chat__list__conversation__info active">
+            @for (conversation of listConversations; track $index) {
+            <div class="chat__list__conversation__info active"
+                [class.active]="conversation.id === selectedConversationId"
+                (click)="selectConversation(conversation.id)">
                 <div class="chat__list__conversation__info__header">
-                    <span class="chat__list__conversation__info__header__name">Maria Silva</span>
+                    <span class="chat__list__conversation__info__header__name">{{ conversation.name }}</span>
                     <span class="chat__list__conversation__info__header__time">10:20</span>
                 </div>
                 <article class="chat__list__conversation__info__message">
                     <span class="chat__list__conversation__info__message__content">Olá! Como você está hoje?</span>
                 </article>
             </div>
+            }
         </div>
     </section>
 
+    <!-- Conversa aberta  -->
     <section class="chat__content">
+        @if (selectedConversation) {
         <div class="chat__content__header">
-            <!-- Header informações -->
-            <span>Maria Silva</span>
+            <!-- Header -->
+            <span>{{ selectedConversation.name }}</span>
         </div>
 
+        <!-- TODO: Implementar listagem das mensagens da conversa -->
         <div class="chat__content__messages">
             <!-- Mensagens -->
             <div class="message message--received">
@@ -49,13 +55,16 @@
         </div>
 
         <footer class="chat__content__message-input">
-            <form>
-                <textarea matInput #messageInputArea placeholder="Digite uma mensagem..." rows="1"
-                    (input)="autoResize()"></textarea>
-                <button mat-icon-button type="submit">
+            <form [formGroup]="messageForm">
+                <textarea matInput #messageInputArea formControlName="content" placeholder="Digite uma mensagem..."
+                    rows="1" (input)="autoResize()" (keydown.enter)="onEnterKeydown($event)"></textarea>
+                <button mat-icon-button type="submit" [disabled]="messageForm.invalid" (click)="sendMessage()">
                     <mat-icon>send</mat-icon>
                 </button>
             </form>
         </footer>
+        } @else {
+            <!-- Não exibe nada -->
+        }
     </section>
 </main>

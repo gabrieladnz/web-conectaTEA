@@ -12,6 +12,7 @@ import { CreateRoomModalComponent } from '../../shared/components/modals/create-
 // Services
 import { RoomService } from '../../core/services/room/room.service';
 import { TokenService } from './../../core/services/token/token.service';
+import { MessageService } from '../../core/services/message/message.service';
 
 // Interfaces
 import { RoomDtoResponse } from '../../core/services/room/room.interface';
@@ -31,12 +32,14 @@ export class DashboardComponent {
         private dialog: MatDialog,
         private roomService: RoomService,
         private tokenService: TokenService,
+        private messageService: MessageService,
     ) {
+        this.messageService.connectToWebSocket();
         this.getListPublicRooms();
         this.getMyRooms();
     }
 
-    protected userName = this.tokenService.getUserName();
+    protected userName = this.tokenService.getName();
     protected userId = this.tokenService.getUserId();
 
     protected createRoom(): void {

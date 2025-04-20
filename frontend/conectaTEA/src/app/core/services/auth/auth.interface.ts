@@ -19,6 +19,7 @@ export interface LoginResponse {
     message: string;
     token: string;
     name: string;
+    username: string;
     userId: number;
 }
 

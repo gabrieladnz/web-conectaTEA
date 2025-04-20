@@ -64,6 +64,7 @@ export class LoginComponent {
                 this.tokenService.saveAll(
                     loginResponse.token,
                     loginResponse.name,
+                    loginResponse.username,
                     loginResponse.userId,
                 );
 

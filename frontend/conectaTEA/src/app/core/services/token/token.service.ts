@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 export class TokenService {
     private type: 'sessionStorage' | 'localStorage' = 'localStorage';
     private readonly tokenUser = 'auth_token';
+    private readonly nameKey = 'auth_name';
     private readonly userNameKey = 'auth_user_name';
     private readonly userIdKey = 'auth_user_id';
 
@@ -25,6 +26,7 @@ export class TokenService {
      */
     public delete(): void {
         window[this.type].removeItem(this.tokenUser);
+        window[this.type].removeItem(this.nameKey);
         window[this.type].removeItem(this.userNameKey);
         window[this.type].removeItem(this.userIdKey);
     }
@@ -33,9 +35,15 @@ export class TokenService {
      * Função responsável por armazenar o token de autenticação do usuário
      * @param token o token a ser armazenado
      */
-    public saveAll(token: string, name: string, userId: number): void {
+    public saveAll(
+        token: string,
+        name: string,
+        username: string,
+        userId: number,
+    ): void {
         window[this.type].setItem(this.tokenUser, token);
-        window[this.type].setItem(this.userNameKey, name);
+        window[this.type].setItem(this.nameKey, name);
+        window[this.type].setItem(this.userNameKey, username);
         window[this.type].setItem(this.userIdKey, userId.toString());
     }
 
@@ -51,6 +59,10 @@ export class TokenService {
 
     public userIsAuthenticated(): boolean {
         return !!this.get();
+    }
+
+    public getName(): string | null {
+        return window[this.type].getItem(this.nameKey);
     }
 
     public getUserName(): string | null {
