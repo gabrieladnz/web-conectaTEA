@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 @Builder
 public record TokenDTO(
         String token,
-        Instant expiration
+        Instant expiration,
+        String name,
+        String username,
+        Long userId
 ) {
 }

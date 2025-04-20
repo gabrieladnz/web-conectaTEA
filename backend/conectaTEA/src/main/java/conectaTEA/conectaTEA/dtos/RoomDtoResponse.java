@@ -9,6 +9,7 @@ public record RoomDtoResponse(
         String name,
         String description,
         TypeRoomEnum roomType,
+        String category,
         List<UserDTOResponse> users
 ) {
 }
