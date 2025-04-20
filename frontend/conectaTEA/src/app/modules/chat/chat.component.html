@@ -38,6 +38,9 @@
         <div class="chat__content__header">
             <!-- Header -->
             <span>{{ selectedConversation.name }}</span>
+            <button class="invite-button" (click)="openInviteUserModal()">
+                <mat-icon>person_add</mat-icon>
+            </button>
         </div>
 
         <!-- TODO: Implementar listagem das mensagens da conversa -->

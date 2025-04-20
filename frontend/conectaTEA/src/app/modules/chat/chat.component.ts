@@ -22,6 +22,7 @@ import { TokenService } from '../../core/services/token/token.service';
 
 // Interfaces
 import { RoomDtoResponse } from '../../core/services/room/room.interface';
+import { SendInviteModalComponent } from '../../shared/components/modals/invites/send-invite-modal/send-invite-modal.component';
 
 @Component({
     selector: 'app-chat',
@@ -115,5 +116,12 @@ export class ChatComponent {
         this.messageService.sendMessage(this.messageForm.value);
         this.messageForm.patchValue({ content: '' });
         this.autoResize();
+    }
+
+    protected openInviteUserModal(): void {
+        // TODO: Implementar endpoint de enviar convite
+        const dialogRef = this.dialog.open(SendInviteModalComponent, {
+            //   data: { roomId }
+        });
     }
 }
