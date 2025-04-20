@@ -61,7 +61,12 @@ export class LoginComponent {
                 const loginResponse = await this.authentication.login(
                     this.formLogin.value,
                 );
-                this.tokenService.save(loginResponse.token);
+                this.tokenService.saveAll(
+                    loginResponse.token,
+                    loginResponse.name,
+                    loginResponse.userId,
+                );
+
                 this.router.navigate(['/dashboard']);
             } catch {
                 this.formLogin.controls['password'].setErrors({

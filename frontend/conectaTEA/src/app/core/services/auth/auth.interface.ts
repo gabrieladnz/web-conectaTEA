@@ -18,6 +18,8 @@ export interface LoginResponse {
     success: boolean;
     message: string;
     token: string;
+    name: string;
+    userId: number;
 }
 
 export interface LogoutResponse {
