@@ -1,0 +1,117 @@
+<main class="dashboard">
+    <app-sidebar></app-sidebar>
+    <section class="dashboard__content">
+        <h1 class="dashboard__content__title">Seus convites</h1>
+
+        <!-- TODO: Futuro: tbs para alternar entre tipos de convites -->
+        <div class="invites-tabs">
+            <button class="invites-tab active">Pendentes</button>
+            <button class="invites-tab">Aceitos</button>
+            <button class="invites-tab">Recusados</button>
+        </div>
+
+        <div class="invites-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">mark_email_unread</span>
+                </div>
+                <div class="stat-info">
+                    <h3>3</h3>
+                    <p>Convites pendentes</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">mark_email_read</span>
+                </div>
+                <div class="stat-info">
+                    <h3>2</h3>
+                    <p>Convites aceitos</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">block</span>
+                </div>
+                <div class="stat-info">
+                    <h3>0</h3>
+                    <p>Convites recusados</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de convites -->
+        <div class="invites-list">
+            <!-- Convite item 1 -->
+            <div class="invite-item">
+                <div class="invite-content">
+                    <div class="invite-avatar">
+                        <span class="material-symbols-outlined">group</span>
+                    </div>
+                    <div class="invite-details">
+                        <h3>Grupo TEA e Educação</h3>
+                        <span class="badge">Educação</span>
+                        <p>Espaço para compartilhar experiências sobre inclusão escolar, adaptações curriculares e
+                            estratégias de ensino.</p>
+                        <div class="invite-sender">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Convite de: Maria Silva</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="invite-actions">
+                    <button class="accept-btn">Aceitar</button>
+                    <button class="decline-btn">Recusar</button>
+                </div>
+            </div>
+
+            <!-- Convite item 2 -->
+            <div class="invite-item">
+                <div class="invite-content">
+                    <div class="invite-avatar">
+                        <span class="material-symbols-outlined">forum</span>
+                    </div>
+                    <div class="invite-details">
+                        <h3>Apoio a Pais</h3>
+                        <span class="badge">Família</span>
+                        <p>Grupo de apoio para familiares compartilharem desafios e conquistas do dia a dia com crianças
+                            autistas.</p>
+                        <div class="invite-sender">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Convite de: João Pereira</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="invite-actions">
+                    <button class="accept-btn">Aceitar</button>
+                    <button class="decline-btn">Recusar</button>
+                </div>
+            </div>
+
+            <!-- Convite item 3 -->
+            <div class="invite-item">
+                <div class="invite-content">
+                    <div class="invite-avatar">
+                        <span class="material-symbols-outlined">healing</span>
+                    </div>
+                    <div class="invite-details">
+                        <h3>Terapias Complementares</h3>
+                        <span class="badge">Saúde</span>
+                        <p>Discussões sobre terapias alternativas, integrações sensoriais e novas abordagens
+                            terapêuticas.</p>
+                        <div class="invite-sender">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Convite de: Paula Santos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="invite-actions">
+                    <button class="accept-btn">Aceitar</button>
+                    <button class="decline-btn">Recusar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

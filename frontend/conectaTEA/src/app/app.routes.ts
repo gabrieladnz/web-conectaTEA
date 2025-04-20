@@ -6,6 +6,7 @@ import { RegisterComponent } from './modules/register/register.component';
 import { LoginComponent } from './modules/login/login.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { ChatComponent } from './modules/chat/chat.component';
+import { InviteComponent } from './modules/invite/invite.component';
 
 // Guards
 import { AuthGuard } from './core/guards/auth.guard';
@@ -37,6 +38,11 @@ export const routes: Routes = [
     {
         path: 'chat',
         component: ChatComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'invites',
+        component: InviteComponent,
         canActivate: [AuthGuard],
     },
     {

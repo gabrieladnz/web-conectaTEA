@@ -31,6 +31,9 @@ O projeto é composto por várias partes, cada uma com suas responsabilidades:
 - ### Crie espaços de conversa
 ![alt text](frontend/conectaTEA/public/assets/images/image-3.png)
 
+- ### Acompanhe seus convites pra ocupar espaços de conversas
+![alt text](frontend/conectaTEA/public/assets/images/image-4.png)
+
 ---
 
 ## 🔙 Back-End
