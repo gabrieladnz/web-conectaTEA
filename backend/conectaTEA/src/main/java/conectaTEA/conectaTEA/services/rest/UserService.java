@@ -18,14 +18,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService{
+public class UserService {
 
     private final UserRepository userRepository;
 
@@ -63,8 +63,6 @@ public class UserService{
                     .build();
             userRepository.save(user);
 
-
-
             return UserDTOResponse.fromEntity(user);
         } catch (Exception e) {
             throw new BusinessException("Erro ao criar usuário");
@@ -94,7 +92,6 @@ public class UserService{
         }
     }
 
-
     public UserDTOResponse update(Long id, UserDTO object) {
         try {
             Optional<User> user = userRepository.findById(id);
@@ -111,7 +108,6 @@ public class UserService{
             throw new BusinessException("Erro ao atualizar usuário");
         }
     }
-
 
     public void delete(Long id) {
         try {
@@ -135,24 +131,79 @@ public class UserService{
         }
     }
 
-    public TokenDTO login (LoginDTO object) {
+    // public TokenDTO login (LoginDTO object) {
 
+    // TokenDTO token = userHasToken(object.username());
+    // if (token != null) {
+    // return token;
+    // }
+    // Optional<User> userDb = userRepository.findUserByUsername(object.username());
+    // if (userDb.isPresent()) {
+    // User user = userDb.get();
+    // var userPassword = new
+    // UsernamePasswordAuthenticationToken(user.getUsername(), object.password());
+    // try{
+    // Authentication authentication =
+    // authenticationManager.authenticate(userPassword);
+    // token = tokenService.generateToken((User) authentication.getPrincipal());
+    // tokenService.saveToken(user.getUsername(), token.token(),
+    // token.expiration().toEpochMilli());
+    // // return token;
+
+    // return new TokenDTO(
+    // token.token(),
+    // token.expiration(),
+    // user.getName(),
+    // user.getId()
+    // );
+    // } catch (BadCredentialsException e){
+    // throw new BusinessException("Usuário ou senha inválidos");
+    // }
+    // } else {
+    // throw new BusinessException("Usuário não encontrado");
+    // }
+    // }
+
+    // TODO: Função alterada pra retornar o nome, username e id do usuaŕio logado
+    public TokenDTO login(LoginDTO object) {
         TokenDTO token = userHasToken(object.username());
         if (token != null) {
-            return token;
+            Optional<User> userDb = userRepository.findUserByUsername(object.username());
+            if (userDb.isPresent()) {
+                User user = userDb.get();
+                return new TokenDTO(
+                        token.token(),
+                        token.expiration(),
+                        user.getName(),
+                        user.getUsername(),
+                        user.getId());
+            } else {
+                throw new BusinessException("Usuário não encontrado");
+            }
         }
+
         Optional<User> userDb = userRepository.findUserByUsername(object.username());
         if (userDb.isPresent()) {
             User user = userDb.get();
             var userPassword = new UsernamePasswordAuthenticationToken(user.getUsername(), object.password());
-             try{
-                 Authentication authentication = authenticationManager.authenticate(userPassword);
-                 token = tokenService.generateToken((User) authentication.getPrincipal());
-                 tokenService.saveToken(user.getUsername(), token.token(), token.expiration().toEpochMilli());
-                 return token;
-             } catch (BadCredentialsException e){
-                    throw new BusinessException("Usuário ou senha inválidos");
-             }
+
+            try {
+                Authentication authentication = authenticationManager.authenticate(userPassword);
+                TokenDTO tokenGerado = tokenService.generateToken((User) authentication.getPrincipal());
+
+                long expirationInSeconds = Duration.between(Instant.now(), token.expiration()).getSeconds();
+                tokenService.saveToken(user.getUsername(), token.token(), expirationInSeconds);
+
+                return new TokenDTO(
+                        tokenGerado.token(),
+                        tokenGerado.expiration(),
+                        user.getName(),
+                        user.getUsername(),
+                        user.getId());
+
+            } catch (BadCredentialsException e) {
+                throw new BusinessException("Usuário ou senha inválidos");
+            }
         } else {
             throw new BusinessException("Usuário não encontrado");
         }
@@ -174,7 +225,7 @@ public class UserService{
         return null;
     }
 
-    public Optional<User> findByUsername(String username){
+    public Optional<User> findByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }
 

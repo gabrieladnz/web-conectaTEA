@@ -1,1 +1,88 @@
-<p>create-room-modal works!</p>
+<section class="modal-overlay">
+    <div class="modal-container" [@fadeInUp]>
+        <div class="modal-header">
+            <h2 class="modal-title">Criar novo espaço de conversa</h2>
+            <button class="modal-close" (click)="closeModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="roomName">Nome do espaço</label>
+                    <input type="text" id="roomName" formControlName="name" placeholder="Ex: Grupo de pais"
+                        class="form-control">
+                    <!-- <div class="form-error" *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+                        <span *ngIf="roomForm.get('name')?.errors?.['required']">Nome da sala é obrigatório</span>
+                        <span *ngIf="roomForm.get('name')?.errors?.['maxlength']">Nome deve ter no máximo 50
+                            caracteres</span>
+                    </div> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="roomDescription">Descrição</label>
+                    <textarea id="roomDescription" formControlName="description"
+                        placeholder="Descreva o objetivo da sua sala..." class="form-control textarea"></textarea>
+                    <!-- <div class="form-error"
+                        *ngIf="roomForm.get('description')?.invalid && roomForm.get('description')?.touched">
+                        <span *ngIf="roomForm.get('description')?.errors?.['required']">Descrição é obrigatória</span>
+                        <span *ngIf="roomForm.get('description')?.errors?.['maxlength']">Descrição deve ter no máximo
+                            200 caracteres</span>
+                    </div> -->
+                </div>
+
+                <div class="form-group">
+                    <label for="roomType">Tipo de sala</label>
+                    <mat-select id="roomType" formControlName="roomType" class="form-control">
+                        <mat-option value="public">Pública (qualquer pessoa pode entrar)</mat-option>
+                        <mat-option value="private">Privada (apenas com convite)</mat-option>
+                    </mat-select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inviteUsers">Convidar usuários</label>
+                    <div class="invite-users-container">
+                        <div class="invite-input-container">
+                            <input type="text" id="inviteUsers" placeholder="Digite o username" class="form-control"
+                                [(ngModel)]="newUserToInvite" [ngModelOptions]="{standalone: true}">
+                            <button type="button" class="btn-invite" (click)="addUserToInviteList()">
+                                <mat-icon>person_add</mat-icon>
+                                Convidar
+                            </button>
+                        </div>
+
+                        <div class="invited-users-list" *ngIf="invitedUsers.length > 0">
+                            <div class="invited-user-chip" *ngFor="let user of invitedUsers; let i = index">
+                                {{ user }}
+                                <button class="remove-user" (click)="removeUserFromList(i)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <div class="categories-container">
+                        <div *ngFor="let category of categories" class="category-chip"
+                            [class.selected]="selectedCategory === category.name" (click)="selectCategory(category.id)">
+                            {{ category.name }}
+                        </div>
+                    </div>
+                    <!-- <div class="form-error" *ngIf="!selectedCategory && formSubmitted">
+                        Selecione uma categoria
+                    </div> -->
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+            <button class="btn-create" (click)="onSubmit()" [disabled]="roomForm.invalid || !selectedCategory">
+                Criar espaço
+            </button>
+        </div>
+    </div>
+</section>

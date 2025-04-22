@@ -1,0 +1,76 @@
+<section class="modal-overlay">
+    <div class="modal-container" [@fadeInUp]>
+        <div class="modal-header">
+            <h2 class="modal-title">Sobre o ConectaTEA</h2>
+            <button class="modal-close" (click)="closeModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="about-section">
+                <div class="about-header">
+                    <img src="assets/images/logo-complete.svg" alt="Logo ConectaTEA" class="about-logo">
+                    <h3>Um espaço seguro de conexão e apoio</h3>
+                </div>
+
+                <div class="about-content">
+                    <p class="highlight">
+                        O ConectaTEA nasceu com um propósito claro: criar um ambiente acolhedor onde pessoas com TEA,
+                        seus familiares e profissionais possam se conectar, compartilhar experiências e crescer juntos.
+                    </p>
+
+                    <h4>Nossa missão</h4>
+                    <p>
+                        Promover a inclusão e o bem-estar da comunidade TEA através de um espaço de diálogo respeitoso,
+                        troca de conhecimentos e apoio mútuo, contribuindo para uma sociedade mais compreensiva e
+                        acolhedora.
+                    </p>
+
+                    <h4>O que oferecemos</h4>
+                    <div class="features">
+                        <div class="feature-card">
+                            <mat-icon>forum</mat-icon>
+                            <h5>Salas de conversa</h5>
+                            <p>Ambientes temáticos para diálogos sobre diferentes aspectos da vida com TEA</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <mat-icon>people</mat-icon>
+                            <h5>Comunidade</h5>
+                            <p>Conexão com pessoas que vivenciam desafios e conquistas semelhantes</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <mat-icon>psychology</mat-icon>
+                            <h5>Troca de experiências</h5>
+                            <p>Compartilhamento de estratégias, recursos e histórias inspiradoras</p>
+                        </div>
+                    </div>
+
+                    <h4>Para quem é o ConectaTEA?</h4>
+                    <ul class="audience-list">
+                        <li><strong>Pessoas com TEA</strong> buscando conexão e troca com seus pares</li>
+                        <li><strong>Familiares e cuidadores</strong> em busca de apoio e orientação</li>
+                        <li><strong>Profissionais</strong> interessados em compartilhar conhecimento</li>
+                        <li><strong>Educadores</strong> que desejam aprender mais sobre neurodiversidade</li>
+                        <li><strong>Aliados</strong> comprometidos com a inclusão e o respeito à diversidade</li>
+                    </ul>
+
+                    <div class="commitment">
+                        <h4>Nosso compromisso</h4>
+                        <p>
+                            Mantemos um ambiente seguro, respeitoso e livre de julgamentos, onde cada pessoa é
+                            valorizada em sua singularidade. Todo o conteúdo é moderado para garantir interações
+                            construtivas e acolhedoras.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-primary" (click)="closeModal()">Entendi</button>
+        </div>
+    </div>
+</section>

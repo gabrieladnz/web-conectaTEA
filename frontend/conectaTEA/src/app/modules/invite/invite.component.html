@@ -1,0 +1,71 @@
+<main class="dashboard">
+    <app-sidebar></app-sidebar>
+    <section class="dashboard__content">
+        <h1 class="dashboard__content__title">Seus convites</h1>
+
+        <!-- TODO: Futuro: tbs para alternar entre tipos de convites -->
+        <div class="invites-tabs">
+            <button class="invites-tab active">Pendentes</button>
+            <!-- <button class="invites-tab">Aceitos</button> -->
+            <!-- <button class="invites-tab">Recusados</button> -->
+        </div>
+
+        <div class="invites-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">mark_email_unread</span>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ pendingInvitesCount }}</h3>
+                    <p>Convites pendentes</p>
+                </div>
+            </div>
+
+            <!-- <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">mark_email_read</span>
+                </div>
+                <div class="stat-info">
+                    <h3>2</h3>
+                    <p>Convites aceitos</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">block</span>
+                </div>
+                <div class="stat-info">
+                    <h3>0</h3>
+                    <p>Convites recusados</p>
+                </div>
+            </div> -->
+        </div>
+
+        <!-- Lista de convites -->
+        <div class="invites-list">
+            @for (invite of invites; track $index) {
+            <div class="invite-item">
+                <div class="invite-content">
+                    <div class="invite-avatar">
+                        <span class="material-symbols-outlined">group</span>
+                    </div>
+                        <div class="invite-details">
+                            <h3>{{ invite.roomName }}</h3>
+                            <span class="badge">{{ invite.category }}</span>
+                            <p>{{ invite.descriptionRoom }}</p>
+                            <div class="invite-sender">
+                                <span class="material-symbols-outlined">person</span>
+                                <span>Convite de: {{ invite.senderName }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invite-actions">
+                        <button class="accept-btn" (click)="acceptInvite(invite.id)">Aceitar</button>
+                        <button class="decline-btn" (click)="declineInvite(invite.id)">Recusar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</main>

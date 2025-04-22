@@ -29,17 +29,27 @@ public class RoomRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoomDtoResponse>> listRoom(){
+    public ResponseEntity<List<RoomDtoResponse>> listRoom() {
         return ResponseEntity.status(200).body(roomService.listAll());
     }
 
+    @GetMapping("/my-rooms/{userId}")
+    public ResponseEntity<List<RoomDtoResponse>> getRoomsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(roomService.listRoomsByUserId(userId));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<RoomDtoResponse> getById(@PathVariable Long id){
+    public ResponseEntity<RoomDtoResponse> getById(@PathVariable Long id) {
         return ResponseEntity.status(200).body(roomService.getById(id));
     }
+
     @GetMapping("/{roomId}/messages")
     public List<ChatMessageDTO> getMessages(@PathVariable Long roomId) {
         return messageService.getMessages(roomId);
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<List<RoomDtoResponse>> getPublicRooms() {
+        return ResponseEntity.ok(roomService.listPublicRooms());
+    }
 }
