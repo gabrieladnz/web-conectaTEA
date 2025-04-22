@@ -1,6 +1,6 @@
 export interface ContentMessage {
     type: string;
-    roomId: string;
+    roomId: number;
     sender: string;
     content: string;
 }

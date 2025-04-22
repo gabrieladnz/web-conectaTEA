@@ -1,5 +1,11 @@
 // Libs
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +16,8 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 // Components
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
@@ -23,6 +31,7 @@ import { TokenService } from '../../core/services/token/token.service';
 // Interfaces
 import { RoomDtoResponse } from '../../core/services/room/room.interface';
 import { SendInviteModalComponent } from '../../shared/components/modals/invites/send-invite-modal/send-invite-modal.component';
+import { ContentMessage } from '../../core/services/message/message.interface';
 
 @Component({
     selector: 'app-chat',
@@ -32,17 +41,29 @@ import { SendInviteModalComponent } from '../../shared/components/modals/invites
         MatIconModule,
         ReactiveFormsModule,
         FormsModule,
+        CommonModule,
     ],
     templateUrl: './chat.component.html',
     styleUrl: './chat.component.scss',
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit, OnDestroy {
     @ViewChild('messageInputArea')
     protected messageInputArea!: ElementRef<HTMLTextAreaElement>;
     protected listConversations!: RoomDtoResponse[];
     protected selectedConversationId: number | null = null;
     protected selectedConversation: RoomDtoResponse | null = null;
     protected messageForm: FormGroup;
+    protected listMessages: ContentMessage[] = [];
+    private messageSubscription: Subscription | null = null;
+    protected searchTerm: string = '';
+
+    protected get filteredConversations() {
+        return this.listConversations.filter((conversation) =>
+            conversation.name
+                .toLowerCase()
+                .includes(this.searchTerm.toLowerCase()),
+        );
+    }
 
     constructor(
         private dialog: MatDialog,
@@ -64,6 +85,24 @@ export class ChatComponent {
 
     protected userId = this.tokenService.getUserId();
     protected userName = this.tokenService.getUserName();
+
+    ngOnInit() {
+        this.messageSubscription = this.messageService
+            .onNewMessage()
+            .subscribe((message) => {
+                this.getMyRooms();
+
+                if (message.roomId === this.selectedConversationId) {
+                    this.listMessagePerConversation();
+                }
+            });
+    }
+
+    ngOnDestroy(): void {
+        if (this.messageSubscription) {
+            this.messageSubscription.unsubscribe();
+        }
+    }
 
     protected autoResize(): void {
         const textarea = this.messageInputArea.nativeElement;
@@ -90,6 +129,8 @@ export class ChatComponent {
         this.messageForm.patchValue({
             roomId: this.selectedConversationId,
         });
+
+        this.listMessagePerConversation();
     }
 
     protected createRoom(): void {
@@ -97,6 +138,7 @@ export class ChatComponent {
 
         modalRef.componentInstance.create.subscribe(() => {
             modalRef.close();
+            this.getMyRooms();
         });
     }
 
@@ -108,8 +150,10 @@ export class ChatComponent {
             });
     }
 
-    protected listMessagePerConversation() {
-        // TODO: Conectar endpoint que lista mensagens da conversa
+    protected async listMessagePerConversation(): Promise<void> {
+        this.listMessages = await this.messageService.listMessagesByRoom(
+            this.selectedConversationId,
+        );
     }
 
     protected sendMessage(): void {
@@ -119,9 +163,11 @@ export class ChatComponent {
     }
 
     protected openInviteUserModal(): void {
-        // TODO: Implementar endpoint de enviar convite
-        const dialogRef = this.dialog.open(SendInviteModalComponent, {
-            //   data: { roomId }
+        this.dialog.open(SendInviteModalComponent, {
+            data: {
+                roomId: this.selectedConversationId,
+                senderId: this.userId,
+            },
         });
     }
 }

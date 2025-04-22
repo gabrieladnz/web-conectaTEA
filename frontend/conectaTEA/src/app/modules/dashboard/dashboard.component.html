@@ -56,12 +56,10 @@
                         {{ room.description }}
                     </div>
                     <div class="room-card__footer">
-                        @for (user of room.users; track $index) {
                         <div class="members">
                             <mat-icon>people</mat-icon>
                             <span>{{ room.users?.length || 0 }} membros</span>
                         </div>
-                        }
                         <button>Participar</button>
                     </div>
                 </div>
