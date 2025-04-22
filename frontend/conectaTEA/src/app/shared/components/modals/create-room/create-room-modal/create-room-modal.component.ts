@@ -132,9 +132,10 @@ export class CreateRoomModalComponent implements OnInit {
                 category: this.selectedCategory,
             };
 
-            this.roomService.createRoom(roomData);
-            this.create.emit(roomData);
-            this.closeModal();
+            this.roomService.createRoom(roomData).then(() => {
+                this.create.emit(roomData);
+                this.closeModal();
+            });
         }
     }
 }

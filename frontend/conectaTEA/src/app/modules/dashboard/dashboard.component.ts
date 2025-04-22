@@ -52,7 +52,11 @@ export class DashboardComponent {
 
     protected getListPublicRooms(): void {
         this.roomService.listPublicRooms().then((rooms: RoomDtoResponse[]) => {
-            this.publicRooms = rooms;
+            this.publicRooms = rooms.filter(
+                (room) =>
+                    room.roomType === 'PUBLIC' &&
+                    !room.users.some((user) => user.id === this.userId),
+            );
         });
     }
 

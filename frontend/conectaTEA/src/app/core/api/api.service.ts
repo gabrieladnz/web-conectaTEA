@@ -14,8 +14,10 @@ export class ApiService {
 
     constructor(protected http: HttpClient) {}
 
-    public get<T>(url: string): Observable<T> {
-        return this.http.get<T>(`${this.BASE_URL}/${url}`);
+    public get<T>(url: string, token?: string): Observable<T> {
+        return this.http.get<T>(`${this.BASE_URL}/${url}`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        });
     }
 
     public post<T>(url: string, body?: unknown, token?: string): Observable<T> {

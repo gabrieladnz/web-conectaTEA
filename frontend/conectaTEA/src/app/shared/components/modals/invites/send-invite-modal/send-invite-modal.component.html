@@ -8,7 +8,7 @@
         </div>
 
         <div class="modal-body">
-            <!-- <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()"> -->
+            <form [formGroup]="inviteForm">
                 <div class="form-group">
                     <label for="username">Nome de usuário</label>
                     <input type="text" id="username" formControlName="username"
@@ -22,16 +22,16 @@
 
                 <div class="form-group">
                     <label for="message">Mensagem (opcional)</label>
-                    <textarea id="message" formControlName="message"
+                    <textarea id="message"
                         placeholder="Adicione uma mensagem personalizada ao convite..."
                         class="form-control textarea"></textarea>
                 </div>
-            <!-- </form> -->
+            </form>
         </div>
 
         <div class="modal-footer">
             <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
-            <button class="btn-create" (click)="onSubmit()" [disabled]="inviteForm.invalid">
+            <button class="btn-create" (click)="sendInvite()" [disabled]="inviteForm.invalid">
                 Enviar convite
             </button>
         </div>
