@@ -5,6 +5,7 @@ import conectaTEA.conectaTEA.dtos.RoomDto;
 import conectaTEA.conectaTEA.dtos.RoomDtoResponse;
 import conectaTEA.conectaTEA.dtos.UserDTOResponse;
 import conectaTEA.conectaTEA.enumerators.StatusInviteEnum;
+import conectaTEA.conectaTEA.enumerators.TypeRoomEnum;
 import conectaTEA.conectaTEA.exceptions.BusinessException;
 import conectaTEA.conectaTEA.models.Room;
 import conectaTEA.conectaTEA.models.RoomInvite;
@@ -52,9 +53,18 @@ public class RoomService {
                     .name(roomDto.name())
                     .description(roomDto.description())
                     .roomType(roomDto.roomType())
+                    .category(roomDto.category())
                     .createdAt(LocalDateTime.now())
                     .owner(userAuthenticated)
                     .build();
+
+            RoomUsers roomUsers = RoomUsers.builder()
+                    .user(userAuthenticated)
+                    .createdAt(LocalDateTime.now())
+                    .room(room)
+                    .build();
+
+            room.setUsers(List.of(roomUsers));
 
             roomRepository.save(room);
 
@@ -84,7 +94,10 @@ public class RoomService {
                     room.getName(),
                     room.getDescription(),
                     room.getRoomType(),
-                    List.of(UserDTOResponse.fromEntity(userAuthenticated))
+                    room.getCategory(),
+                    room.getUsers().stream()
+                            .map(user -> UserDTOResponse.fromEntity(user.getUser()))
+                            .toList()
             );
 
             webSocketService.notifyNewRoom(response);
@@ -105,6 +118,7 @@ public class RoomService {
                     room.getName(),
                     room.getDescription(),
                     room.getRoomType(),
+                    room.getCategory(),
                     room.getUsers().stream().map(RoomUsers::getUser).map(UserDTOResponse::fromEntity).toList()
             );
         }).toList();
@@ -120,6 +134,7 @@ public class RoomService {
                         room.getName(),
                         room.getDescription(),
                         room.getRoomType(),
+                        room.getCategory(),
                         room.getUsers().stream().map(RoomUsers::getUser).map(UserDTOResponse::fromEntity).toList()
                 );
             }
@@ -129,4 +144,46 @@ public class RoomService {
         throw new BusinessException("User not found");
     }
 
+    protected Room findRoomById(Long id){
+        Optional<Room> room = roomRepository.findById(id);
+        if (room.isEmpty()){
+            throw new BusinessException("Room not found");
+        }
+        return room.get();
+    }
+
+    public List<RoomDtoResponse> listPublicRooms() {
+        List<Room> publicRooms = roomRepository.findByRoomType(TypeRoomEnum.PUBLIC);
+    
+        return publicRooms.stream().map(room ->
+            new RoomDtoResponse(
+                room.getId(),
+                room.getName(),
+                room.getDescription(),
+                room.getRoomType(),
+                room.getCategory(),
+                room.getUsers().stream()
+                    .map(RoomUsers::getUser)
+                    .map(UserDTOResponse::fromEntity)
+                    .toList()
+            )
+        ).toList();
+    }    
+
+    public List<RoomDtoResponse> listRoomsByUserId(Long userId) {
+        List<Room> userRooms = roomRepository.findByUsers_User_Id(userId);
+        
+        return userRooms.stream().map(room -> 
+            new RoomDtoResponse(
+                room.getId(),
+                room.getName(),
+                room.getDescription(),
+                room.getRoomType(),
+                room.getCategory(),
+                room.getUsers().stream()
+                    .map(roomUser -> UserDTOResponse.fromEntity(roomUser.getUser()))
+                    .toList()
+            )
+        ).toList();
+    }
 }

@@ -10,6 +10,7 @@ public record RoomDto(
         String name,
         String description,
        @NotNull(message = "Provide roomType") TypeRoomEnum roomType,
-        List<@Min(value = 1, message = "Please provide usernames") String> usernames
+        String category,
+        List<@Min(value = 1, message = "Por favor, insira um convidado.") String> usernames
 ) {
 }

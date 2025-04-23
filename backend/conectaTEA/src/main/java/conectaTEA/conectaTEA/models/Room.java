@@ -33,6 +33,9 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private TypeRoomEnum roomType;
 
+    @Column
+    private String category;
+
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
@@ -45,7 +48,4 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<RoomInvite> invites;
-
-
-
 }

@@ -1,37 +1,69 @@
-
 <main class="dashboard">
     <app-sidebar></app-sidebar>
 
     <section class="dashboard__content">
-        <h1 class="dashboard__content__title">Bem-vindo(a) de volta, Fulano!</h1>
+        <h1 class="dashboard__content__title">Bem-vindo(a) de volta, {{ userName }}!</h1>
 
         <section class="dashboard__content__card--info">
             <div>
-                <p class="dashboard__content__card--info__title">Fácil, rápido e do seu jeito: crie uma sala personalizada para compartilhar ideias, trocar experiências
+                <p class="dashboard__content__card--info__title">Fácil, rápido e do seu jeito: crie uma sala
+                    personalizada para compartilhar ideias, trocar experiências
                     e reunir pessoas com os mesmos interesses!</p>
 
-                <button class="dashboard__content__card--info__button" mat-raised-button (click)="createRoom()">Monte seu espaço</button>
+                <button class="dashboard__content__card--info__button" mat-raised-button (click)="createRoom()">Monte
+                    seu espaço</button>
             </div>
 
             <figure>
-                <img src="assets/images/people.svg">
+                <img src="assets/images/people.svg" alt="Pessoas conversando">
             </figure>
         </section>
 
         <section class="dashboard__content__room">
             <h2 class="dashboard__content__room__title">Seus espaços de conversa</h2>
-
-            <div>
-                <!-- TODO: Implementar componente de salas existentes baseado na estrutura do back -->
+            <div class="dashboard__content__room__placeholder">
+                 @for (room of myRooms.slice(0, 3); track $index) {
+                     <div class="room-card">
+                         <div class="room-card__header">
+                             <h3>{{ room.name }}</h3>
+                             <span class="badge">{{ room.category }}</span>
+                         </div>
+                         <div class="room-card__content">
+                            {{ room.description }}
+                         </div>
+                         <div class="room-card__footer">
+                             <div class="members">
+                                 <mat-icon>people</mat-icon>
+                                 <span>{{ room.users?.length || 0 }} membros</span>
+                             </div>
+                             <button routerLink="/chat" routerLinkActive="active">Entrar</button>
+                         </div>
+                     </div>
+                 }
             </div>
         </section>
 
-
         <section class="dashboard__content__suggested">
             <h2 class="dashboard__content__suggested__title">Salas de bate-papo que combinam com você</h2>
-
-            <div>
-                <!-- TODO: Implementar componente de salas sugeridas baseado na estrutura do back -->
+            <div class="dashboard__content__suggested__placeholder">
+                @for (room of publicRooms.slice(0, 3); track $index) {
+                <div class="room-card">
+                    <div class="room-card__header">
+                        <h3>{{ room.name }}</h3>
+                        <span class="badge">{{ room.category }}</span>
+                    </div>
+                    <div class="room-card__content">
+                        {{ room.description }}
+                    </div>
+                    <div class="room-card__footer">
+                        <div class="members">
+                            <mat-icon>people</mat-icon>
+                            <span>{{ room.users?.length || 0 }} membros</span>
+                        </div>
+                        <button>Participar</button>
+                    </div>
+                </div>
+                }
             </div>
         </section>
     </section>

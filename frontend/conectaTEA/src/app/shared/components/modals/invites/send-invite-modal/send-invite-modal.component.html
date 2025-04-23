@@ -1,0 +1,39 @@
+<section class="modal-overlay">
+    <div class="modal-container" [@fadeInUp]>
+        <div class="modal-header">
+            <h2 class="modal-title">Convidar usuário</h2>
+            <button class="modal-close" (click)="closeModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="inviteForm">
+                <div class="form-group">
+                    <label for="username">Nome de usuário</label>
+                    <input type="text" id="username" formControlName="username"
+                        placeholder="Digite o username do usuário" class="form-control">
+                    <div class="form-error"
+                        *ngIf="inviteForm.get('username')?.invalid && inviteForm.get('username')?.touched">
+                        <span *ngIf="inviteForm.get('username')?.errors?.['required']">Nome de usuário é
+                            obrigatório</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensagem (opcional)</label>
+                    <textarea id="message"
+                        placeholder="Adicione uma mensagem personalizada ao convite..."
+                        class="form-control textarea"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+            <button class="btn-create" (click)="sendInvite()" [disabled]="inviteForm.invalid">
+                Enviar convite
+            </button>
+        </div>
+    </div>
+</section>

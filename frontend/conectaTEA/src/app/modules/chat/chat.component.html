@@ -1,3 +1,80 @@
-<main>
+<main class="chat">
     <app-sidebar></app-sidebar>
+
+    <section class="chat__list">
+        <div class="chat__list__header">
+            <h3>Conversas</h3>
+
+            <button mat-icon-button (click)="createRoom()">
+                <mat-icon>add_comment</mat-icon>
+            </button>
+        </div>
+
+        <header class="chat__list__search-bar">
+            <input type="text" placeholder="Pesquisar conversa..." [(ngModel)]="searchTerm"
+                class="chat__list__search-bar__input" />
+        </header>
+        <!-- Lista de conversas  -->
+        <div class="chat__list__conversation">
+            @for (conversation of filteredConversations; track $index) {
+            <div class="chat__list__conversation__info active"
+                [class.active]="conversation.id === selectedConversationId"
+                (click)="selectConversation(conversation.id)">
+                <div class="chat__list__conversation__info__header">
+                    <span class="chat__list__conversation__info__header__name">{{ conversation.name }}</span>
+                    <!-- <span class="chat__list__conversation__info__header__time">10:20</span> -->
+                </div>
+                <article class="chat__list__conversation__info__message">
+                    <!-- <span class="chat__list__conversation__info__message__content">Olá! Como você está hoje?</span> -->
+                </article>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Conversa aberta  -->
+    <section class="chat__content">
+        @if (selectedConversation) {
+        <div class="chat__content__header">
+            <!-- Header -->
+            <span>{{ selectedConversation.name }}</span>
+            <button class="invite-button" (click)="openInviteUserModal()">
+                <mat-icon>person_add</mat-icon>
+            </button>
+        </div>
+
+        <div class="chat__content__messages">
+            @for (message of listMessages; track $index) {
+            <div [ngClass]="{
+                      'message': true,
+                      'message--sent': message.sender === userName,
+                      'message--received': message.sender !== userName
+                    }">
+
+                <div class="message__content">
+                    <ng-container *ngIf="message.sender !== userName">
+                        <strong>{{ message.sender }}:</strong> {{ message.content }}
+                    </ng-container>
+                    <ng-container *ngIf="message.sender === userName">
+                        {{ message.content }}
+                    </ng-container>
+                </div>
+            </div>
+            }
+        </div>
+
+
+        <footer class="chat__content__message-input">
+            <form [formGroup]="messageForm">
+                <textarea matInput #messageInputArea formControlName="content" placeholder="Digite uma mensagem..."
+                    rows="1" (input)="autoResize()" (keydown.enter)="onEnterKeydown($event)"></textarea>
+                <button mat-icon-button type="submit" [disabled]="messageForm.invalid" (click)="sendMessage()">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </form>
+        </footer>
+        } @else {
+        <!-- Não exibe nada -->
+        }
+    </section>
 </main>

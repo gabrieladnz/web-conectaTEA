@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^19.2.7",
     "@angular/cdk": "^19.2.3",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
@@ -22,10 +23,12 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@stomp/stompjs": "^7.1.1",
     "@tsparticles/angular": "^3.0.0",
     "@tsparticles/engine": "^3.8.1",
     "@tsparticles/slim": "^3.8.1",
     "rxjs": "~7.8.0",
+    "sockjs-client": "^1.6.1",
     "tslib": "^2.3.0",
     "tsparticles": "^3.8.1",
     "zone.js": "~0.15.0"

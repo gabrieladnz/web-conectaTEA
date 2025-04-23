@@ -18,8 +18,23 @@ O projeto é composto por várias partes, cada uma com suas responsabilidades:
 ## 💡 Funcionalidades
 
 
-## 🖥️ Front-End
+## 🖥️ Front-End 
+- ### 📸 Dashboard
+![alt text](frontend/conectaTEA/public/assets/images/image.png)
 
+- ### 💬 Chat
+![alt text](frontend/conectaTEA/public/assets/images/image-1.png)
+
+- ### Sobre
+![alt text](frontend/conectaTEA/public/assets/images/image-2.png)
+
+- ### Crie espaços de conversa
+![alt text](frontend/conectaTEA/public/assets/images/image-3.png)
+
+- ### Acompanhe seus convites pra ocupar espaços de conversas
+![alt text](frontend/conectaTEA/public/assets/images/image-4.png)
+
+---
 
 ## 🔙 Back-End
 
