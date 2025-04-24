@@ -41,7 +41,7 @@ public class RoomRoomInviteServiceImpl implements RoomInviteService {
     public void create(RoomInviteDTO dto) {
         User sender = userRepository.findById(dto.senderId())
                 .orElseThrow(() -> new RuntimeException("Remetente não encontrado"));
-        User recipient = userRepository.findById(dto.recipientId())
+        User recipient = userRepository.findUserByUsername(dto.recipientUsername())
                 .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
         Room room = roomRepository.findById(dto.roomId())
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
@@ -88,7 +88,7 @@ public class RoomRoomInviteServiceImpl implements RoomInviteService {
 
         User sender = userRepository.findById(dto.senderId())
                 .orElseThrow(() -> new RuntimeException("Remetente não encontrado"));
-        User recipient = userRepository.findById(dto.recipientId())
+        User recipient = userRepository.findUserByUsername(dto.recipientUsername())
                 .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
 
         roomInvite.setSender(sender);
