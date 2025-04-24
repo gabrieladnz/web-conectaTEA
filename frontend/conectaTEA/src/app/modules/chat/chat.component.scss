@@ -215,12 +215,18 @@
                     margin-right: auto;
                     border-top-left-radius: 0;
                     font-size: 15px;
-                    border-left: 3px solid #a87fff;
+                    border-left: 3px solid transparent;
                     width: fit-content;
 
                     strong {
                         color: grey;
                     }
+
+                    &.color-a { border-left-color: #a87fff; }
+                    &.color-b { border-left-color: #7fc5ff; }
+                    &.color-c { border-left-color: #7fffaf; }
+                    &.color-d { border-left-color: #ffb87f; }
+                    &.color-e { border-left-color: #ff7f7f; }
                 }
 
                 &--sent {

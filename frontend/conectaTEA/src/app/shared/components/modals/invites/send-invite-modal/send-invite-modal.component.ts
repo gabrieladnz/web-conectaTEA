@@ -27,7 +27,7 @@ export class SendInviteModalComponent {
         @Inject(MAT_DIALOG_DATA)
         public data: { roomId: number; senderId: number },
         private inviteService: InviteService,
-    ) {}
+    ) { }
 
     protected ngOnInit(): void {
         this.initForm();
@@ -43,10 +43,9 @@ export class SendInviteModalComponent {
         const inviteData = {
             roomId: this.data.roomId,
             senderId: this.data.senderId,
-            recipientId: this.inviteForm.value.username,
+            recipientUserName: this.inviteForm.value.username,
         };
 
-        console.log(inviteData);
         try {
             await this.inviteService.sendInvite(inviteData);
             this.dialogRef.close();

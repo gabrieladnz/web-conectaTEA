@@ -45,23 +45,19 @@
 
         <div class="chat__content__messages">
             @for (message of listMessages; track $index) {
-            <div [ngClass]="{
-                      'message': true,
-                      'message--sent': message.sender === userName,
-                      'message--received': message.sender !== userName
-                    }">
-
+              <div [ngClass]="getMessageClasses(message)">
                 <div class="message__content">
-                    <ng-container *ngIf="message.sender !== userName">
-                        <strong>{{ message.sender }}:</strong> {{ message.content }}
-                    </ng-container>
-                    <ng-container *ngIf="message.sender === userName">
-                        {{ message.content }}
-                    </ng-container>
+                  <ng-container *ngIf="message.sender !== userName">
+                    <strong>{{ message.sender }}:</strong> {{ message.content }}
+                  </ng-container>
+                  <ng-container *ngIf="message.sender === userName">
+                    {{ message.content }}
+                  </ng-container>
                 </div>
-            </div>
+              </div>
             }
-        </div>
+          </div>
+
 
 
         <footer class="chat__content__message-input">

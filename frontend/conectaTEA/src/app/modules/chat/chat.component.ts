@@ -170,4 +170,39 @@ export class ChatComponent implements OnInit, OnDestroy {
             },
         });
     }
+
+    private senderColorMap = new Map<string, string>();
+    private availableColors = [
+        'color-a',
+        'color-b',
+        'color-c',
+        'color-d',
+        'color-e',
+    ];
+
+    protected getColorClass(sender: string): string {
+        if (!this.senderColorMap.has(sender)) {
+            const color =
+                this.availableColors[
+                    this.senderColorMap.size % this.availableColors.length
+                ];
+            this.senderColorMap.set(sender, color);
+        }
+        return this.senderColorMap.get(sender)!;
+    }
+
+    protected getMessageClasses(message: ContentMessage): string[] {
+        const classes = ['message'];
+
+        if (message.sender === this.userName) {
+            classes.push('message--sent');
+        } else {
+            classes.push(
+                'message--received',
+                this.getColorClass(message.sender),
+            );
+        }
+
+        return classes;
+    }
 }
