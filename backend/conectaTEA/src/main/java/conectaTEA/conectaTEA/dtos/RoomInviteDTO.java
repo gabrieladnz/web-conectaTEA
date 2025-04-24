@@ -5,6 +5,6 @@ import lombok.Builder;
 @Builder
 public record RoomInviteDTO(
         Long senderId,
-        Long recipientId,
+        String recipientUsername,
         Long roomId
 ) {}
