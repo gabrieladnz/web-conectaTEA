@@ -1,6 +1,6 @@
 export interface InviteRequest {
     senderId: number;
-    recipientUserName: string;
+    recipientUsername: string;
     roomId: number;
 }
 

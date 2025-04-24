@@ -43,7 +43,7 @@ export class SendInviteModalComponent {
         const inviteData = {
             roomId: this.data.roomId,
             senderId: this.data.senderId,
-            recipientUserName: this.inviteForm.value.username,
+            recipientUsername: this.inviteForm.value.username,
         };
 
         try {
