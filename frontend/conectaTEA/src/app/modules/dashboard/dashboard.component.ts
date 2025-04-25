@@ -47,6 +47,7 @@ export class DashboardComponent {
 
         modalRef.componentInstance.create.subscribe(() => {
             modalRef.close();
+            this.getMyRooms();
         });
     }
 

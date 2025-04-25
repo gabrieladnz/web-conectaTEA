@@ -191,8 +191,8 @@ public class UserService {
                 Authentication authentication = authenticationManager.authenticate(userPassword);
                 TokenDTO tokenGerado = tokenService.generateToken((User) authentication.getPrincipal());
 
-                long expirationInSeconds = Duration.between(Instant.now(), token.expiration()).getSeconds();
-                tokenService.saveToken(user.getUsername(), token.token(), expirationInSeconds);
+                long expirationInSeconds = Duration.between(Instant.now(), tokenGerado.expiration()).getSeconds();
+                tokenService.saveToken(user.getUsername(), tokenGerado.token(), expirationInSeconds);
 
                 return new TokenDTO(
                         tokenGerado.token(),
