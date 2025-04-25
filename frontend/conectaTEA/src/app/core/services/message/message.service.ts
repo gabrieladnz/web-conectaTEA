@@ -29,7 +29,7 @@ export class MessageService extends ApiService {
         this.stompClient = new Client({
             webSocketFactory: () =>
                 new WebSocket(
-                    'ws://conectatea.squareweb.app/api/websocket-chat/websocket',
+                    'wss://conectatea.squareweb.app/api/websocket-chat/websocket',
                 ),
         });
 
