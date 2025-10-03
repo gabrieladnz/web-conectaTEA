@@ -35,6 +35,3 @@ O projeto é composto por várias partes, cada uma com suas responsabilidades:
 ![alt text](frontend/conectaTEA/public/assets/images/image-4.png)
 
 ---
-
-
-## 🎨 Design
