@@ -36,22 +36,5 @@ O projeto é composto por várias partes, cada uma com suas responsabilidades:
 
 ---
 
-## 🔙 Back-End
-
-
-## 🗄️ Configuração do Banco de Dados
-
-
-## 📜 Endpoints da API
-
-
-## 🚀 Swagger
-
-
-## 🧪 Testes
-
-
-## 📊 Diagramas e modelagens
-
 
 ## 🎨 Design
